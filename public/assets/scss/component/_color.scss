@@ -1,0 +1,70 @@
+$theme-colors: (
+  "white": var(--white),
+  "white-8": var(--white-8),
+  "white-15": var(--white-15),
+  "white-80": var(--white-80),
+  "white-200": var(--white-200),
+  "black": var(--black),
+  "black-10": var(--black-10),
+  "body-bg": var(--body-bg),
+  "main-color": var(--main-color),
+  "textBlack": var(--textBlack),
+  "ld-black": var(--ld-black),
+  "ld-border": var(--ld-border),
+  "ld-section-bg": var(--ld-section-bg),
+  "ld-feature-bg": var(--ld-feature-bg),
+  "ld-feature-item-bg": var(--ld-feature-item-bg),
+  "ld-feature-item-1": var(--ld-feature-item-1),
+  "ld-feature-item-2": var(--ld-feature-item-2),
+  "ld-feature-item-3": var(--ld-feature-item-3),
+  "ld-feature-item-4": var(--ld-feature-item-4),
+  "ld-feature-item-5": var(--ld-feature-item-5),
+  "ld-core-feature-item-bg": var(--ld-core-feature-item-bg),
+  "dark-color": var(--dark-color),
+  "para-text": var(--para-text),
+  "positive-para-text": var(--positive-para-text),
+  "body-text": var(--body-text),
+  "light-border": var(--light-border),
+  "sidebar-bg": var(--sidebar-bg),
+  "sidebar-divider": var(--sidebar-divider),
+  "sidebar-text": var(--sidebar-text),
+  "disabled": var(--disabled),
+  "stroke": var(--stroke),
+  "purple": var(--purple),
+  "red": var(--red),
+  "positive-red": var(--positive-red),
+  "green": var(--green),
+  "blue-light": var(--blue-light),
+  "positive-blue-light": var(--positive-blue-light),
+  "yellow": var(--yellow),
+  "positive-yellow": var(--positive-yellow),
+  "ongong": var(--ongong),
+  "positive-ongong": var(--positive-ongong),
+  "review": var(--review),
+  "positive-review": var(--positive-review),
+  "positive-bg": var(--positive-bg),
+  "positive-blue": var(--positive-blue),
+  "scroll-track": var(--scroll-track),
+  "scroll-thumb": var(--scroll-thumb),
+  "dashboard-1": var(--dashboard-1),
+  "dashboard-2": var(--dashboard-2),
+  "dashboard-3": var(--dashboard-3),
+  "dashboard-4": var(--dashboard-4),
+);
+@each $key, $color in $theme-colors {
+  .text-#{$key} {
+    color: $color !important;
+  }
+}
+/* Background Color */
+@each $key, $color in $theme-colors {
+  .bg-#{$key} {
+    background-color: $color !important;
+  }
+}
+/* Border Color */
+@each $key, $color in $theme-colors {
+  .bd-c-#{$key} {
+    border-color: $color !important;
+  }
+}

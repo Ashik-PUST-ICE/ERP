@@ -1,0 +1,347 @@
+.zTab {
+    &-reset {
+        --bs-nav-link-padding-x: 0;
+        --bs-nav-link-padding-y: 0;
+        --bs-nav-link-font-weight: 400;
+        --bs-nav-link-color: #fff;
+        --bs-nav-tabs-border-width: 0;
+        --bs-nav-tabs-border-color: #fff;
+        --bs-nav-tabs-border-radius: 0;
+        --bs-nav-tabs-link-active-color: #fff;
+        --bs-nav-tabs-link-active-bg: #fff;
+        flex-wrap: nowrap;
+        border-bottom: none;
+    }
+    &-one {
+        @media screen and (max-width: 575px) {
+            justify-content: center;
+            gap: toRem(10);
+            padding-bottom: toRem(20);
+        }
+        .nav {
+            &-link {
+                position: relative;
+                padding: toRem(0) toRem(15) toRem(30);
+                background-color: transparent;
+                border-radius: 0;
+                white-space: nowrap;
+                @include fontFamily(14, $fw_semiBold, 16, $para-text);
+                display: flex;
+                align-items: center;
+                gap: toRem(5);
+                @media screen and (max-width: 575px) {
+                    padding: toRem(10);
+                    background-color: $white;
+                    border-radius: toRem(5);
+                }
+                .icon {
+                    flex-shrink: 0;
+                    max-width: toRem(16);
+                    width: 100%;
+                    position: absolute;
+                    transform: scale(0);
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                    img {
+                        max-width: toRem(16);
+                        width: 100%;
+                        max-height: toRem(16);
+                        height: 100%;
+                    }
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0%;
+                    height: toRem(2);
+                    background-color: $main-color;
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                }
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: toRem(3);
+                    left: 0;
+                    transform: scale(1);
+                    width: toRem(5);
+                    height: toRem(5);
+                    border-radius: 50%;
+                    background-color: $para-text;
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                }
+                &.active {
+                    background-color: transparent;
+                    color: $main-color;
+                    @media screen and (max-width: 575px) {
+                        background-color: $main-color !important;
+                        color: $white;
+                    }
+                    .icon {
+                        position: relative;
+                        transform: scale(1);
+                    }
+                    &::before {
+                        width: 100%;
+                    }
+                    &::after {
+                        transform: scale(0);
+                    }
+                    svg {
+                        circle {
+                            stroke: $main-color;
+                        }
+                        path {
+                            fill: $main-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-two {
+        @media screen and (max-width: 575px) {
+            justify-content: center;
+            gap: toRem(10);
+            padding-bottom: toRem(20);
+        }
+        .nav {
+            &-link {
+                position: relative;
+                padding: toRem(0) toRem(11.5) toRem(30);
+                background-color: transparent;
+                border-radius: 0;
+                white-space: nowrap;
+                @include fontFamily(14, $fw_semiBold, 16, $para-text);
+                display: flex;
+                align-items: center;
+                gap: toRem(5);
+                @media screen and (max-width: 575px) {
+                    padding: toRem(10);
+                    background-color: $white;
+                    border-radius: toRem(5);
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0%;
+                    height: toRem(2);
+                    background-color: $main-color;
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                }
+                .dot {
+                    // content: "";
+                    // position: absolute;
+                    // top: toRem(5);
+                    // left: 0;
+                    // transform: scale(1);
+                    width: toRem(5);
+                    height: toRem(5);
+                    border-radius: 50%;
+                    background-color: $para-text;
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                }
+                &.active {
+                    background-color: transparent;
+                    color: $main-color;
+                    @media screen and (max-width: 575px) {
+                        background-color: $main-color !important;
+                        color: $white;
+                    }
+                    &::before {
+                        width: 100%;
+                    }
+                    .dot {
+                        background-color: $main-color;
+                    }
+                    svg {
+                        circle {
+                            stroke: $main-color;
+                        }
+                        path {
+                            fill: $main-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-three {
+        @media screen and (max-width: 575px) {
+            justify-content: center;
+            gap: toRem(10);
+            padding-bottom: toRem(20);
+        }
+        .nav {
+            &-link {
+                position: relative;
+                padding: toRem(0) toRem(18) toRem(14);
+                background-color: transparent;
+                border-radius: 0;
+                white-space: nowrap;
+                @include fontFamily(14, $fw_semiBold, 16, $para-text);
+                display: flex;
+                align-items: center;
+                gap: toRem(7);
+                @media screen and (max-width: 575px) {
+                    padding: toRem(10);
+                    background-color: $white;
+                    border-radius: toRem(5);
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0%;
+                    height: toRem(2);
+                    background-color: $main-color;
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                }
+                .dot {
+                    // content: "";
+                    // position: absolute;
+                    // top: toRem(5);
+                    // left: 0;
+                    // transform: scale(1);
+                    width: toRem(5);
+                    height: toRem(5);
+                    border-radius: 50%;
+                    background-color: $para-text;
+                    transition: all 0.3s;
+                    @media screen and (max-width: 575px) {
+                        display: none;
+                    }
+                }
+                &.active {
+                    background-color: transparent;
+                    color: $main-color;
+                    @media screen and (max-width: 575px) {
+                        background-color: $main-color !important;
+                        color: $white;
+                    }
+                    &::before {
+                        width: 100%;
+                    }
+                    .dot {
+                        background-color: $main-color;
+                    }
+                    svg {
+                        circle {
+                            stroke: $main-color;
+                        }
+                        path {
+                            fill: $main-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-four {
+        padding: toRem(5);
+        background-color: $body-bg;
+        border: toRem(1) solid $stroke;
+        border-radius: toRem(4);
+        .nav {
+            &-link {
+                width: 100%;
+                padding: toRem(18) toRem(44) toRem(17);
+                background-color: transparent;
+                border-radius: toRem(4);
+                white-space: nowrap;
+                @include fontFamily(18, $fw_bold, 18, $ld-black);
+                &.active {
+                    background-color: $white;
+                    color: $ld-black;
+                }
+            }
+        }
+    }
+    &-five {
+        display: flex;
+        justify-content: center;
+        gap: toRem(24);
+        margin-bottom: toRem(40);
+        @media screen and (max-width: 575px) {
+            gap: toRem(10);
+            margin-bottom: toRem(20);
+        }
+        .nav {
+            &-item {
+                flex: 1 1 auto;
+            }
+            &-link {
+                position: relative;
+                width: 100%;
+                padding: toRem(19);
+                background-color: $ld-core-feature-item-bg;
+                border-radius: toRem(4);
+                white-space: nowrap;
+                @include fontFamily(18, $fw_bold, 21, $ld-black);
+                text-align: center;
+                @media screen and (max-width: 575px) {
+                    padding: toRem(5);
+                }
+                &.active {
+                    background-color: $main-color;
+                    color: $white;
+                }
+            }
+        }
+    }
+    &-vertical {
+        &-one {
+            flex: 1 0 auto;
+            width: 100%;
+            @media screen and (min-width: 992px) {
+                max-width: toRem(400);
+            }
+            @media screen and (min-width: 1400px) {
+                max-width: toRem(482);
+            }
+            .nav-link {
+                background-color: $ld-feature-item-bg;
+                border: toRem(1) solid $white-15;
+                border-radius: toRem(5);
+                padding: toRem(32) toRem(20);
+                text-align: left;
+                @include fontFamily(24, $fw_bold, 38, $white);
+                &.active {
+                    border-color: $main-color;
+                }
+                // @media screen and (max-width: 1399px) {
+                //   padding: toRem(45) toRem(43);
+                // }
+                @media screen and (max-width: 1199px) {
+                    padding: toRem(20);
+                }
+                @media screen and (max-width: 991px) {
+                    padding: toRem(10);
+                    font-size: toRem(20);
+                    line-height: toRem(30);
+                }
+            }
+        }
+    }
+}

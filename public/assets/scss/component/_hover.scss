@@ -1,0 +1,23 @@
+.hover {
+  &-color {
+    &-main-color {
+      &:hover {
+        color: $main-color !important;
+      }
+    }
+  }
+  &-bg {
+    &-main-color {
+      &:hover {
+        background-color: $main-color !important;
+      }
+    }
+  }
+  &-border {
+    &-main-color {
+      &:hover {
+        border-color: $main-color !important;
+      }
+    }
+  }
+}

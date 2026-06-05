@@ -1,0 +1,508 @@
+/* Create wrap */
+.create-wrap {
+  background-color: $body-bg;
+  border-radius: toRem(10);
+  padding: toRem(83) toRem(10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (max-width: 575px) {
+    padding: toRem(20) toRem(10);
+  }
+  h4 {
+    @media screen and (max-width: 575px) {
+      font-size: toRem(20) !important;
+      line-height: toRem(25) !important;
+    }
+  }
+}
+/* Badges */
+.zBadge {
+  position: relative;
+  display: inline-block;
+  padding: toRem(3) toRem(6) toRem(3) toRem(16);
+  border-radius: toRem(4);
+  @include fontFamily(10, $fw_medium, 12, $textBlack);
+  background-color: $body-bg;
+  white-space: nowrap;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: toRem(6);
+    transform: translateY(-50%);
+    width: toRem(6);
+    height: toRem(6);
+    border-radius: 50%;
+    background-color: $textBlack;
+  }
+  &-contractual,
+  &-active,
+  &-done {
+    color: $green;
+    background-color: $positive-bg;
+    &::before {
+      background-color: $green;
+    }
+  }
+  &-permanent {
+    color: $main-color;
+    background-color: $positive-blue;
+    &::before {
+      background-color: $main-color;
+    }
+  }
+  &-ongoing {
+    color: $ongoing;
+    background-color: $positive-ongoing;
+    &::before {
+      background-color: $ongoing;
+    }
+  }
+  &-blue-light {
+    color: $blue-light;
+    background-color: $positive-blue-light;
+    &::before {
+      background-color: $blue-light;
+    }
+  }
+  &-yellow {
+    color: $yellow;
+    background-color: $positive-yellow;
+    &::before {
+      background-color: $yellow;
+    }
+  }
+  &-review {
+    color: $review;
+    background-color: $positive-review;
+    &::before {
+      background-color: $review;
+    }
+  }
+  &-red {
+    color: $red;
+    background-color: $positive-red;
+    &::before {
+      background-color: $red;
+    }
+  }
+  &-deactivate {
+    color: $para-text;
+    background-color: $positive-para-text;
+    &::before {
+      background-color: $para-text;
+    }
+  }
+}
+/* Lists */
+.notify-list {
+  max-height: toRem(288);
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: toRem(6);
+  }
+  &::-webkit-scrollbar-track {
+    background: $scroll-track;
+    border-radius: toRem(50);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-thumb;
+    border-radius: toRem(50);
+  }
+  // &:has(:nth-child(4)) {
+  //   overflow-y: scroll;
+  //   &::-webkit-scrollbar {
+  //     width: toRem(6);
+  //   }
+  //   &::-webkit-scrollbar-track {
+  //     background: $scroll-track;
+  //     border-radius: toRem(50);
+  //   }
+  //   &::-webkit-scrollbar-thumb {
+  //     background: $scroll-thumb;
+  //     border-radius: toRem(50);
+  //   }
+  // }
+  li {
+    padding: toRem(20) 0;
+    border-bottom: toRem(1) solid $main-color;
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+}
+/* Lists */
+.zList {
+  &-pb {
+    &-4 {
+      li {
+        padding-bottom: toRem(4);
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+    &-10 {
+      li {
+        padding-bottom: toRem(10);
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+    &-14 {
+      li {
+        padding-bottom: toRem(14);
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+    &-16 {
+      li {
+        padding-bottom: toRem(16);
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+    &-21 {
+      li {
+        padding-bottom: toRem(21);
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+  &-one {
+    li {
+      a {
+        border-bottom: toRem(2) solid transparent;
+        &.active,
+        &:hover {
+          border-bottom: toRem(2) solid $main-color;
+          svg {
+            circle {
+              stroke: $main-color;
+            }
+            path {
+              fill: $main-color;
+            }
+          }
+          span {
+            color: $main-color !important;
+          }
+        }
+      }
+    }
+  }
+  &-three {
+    @media screen and (max-width: 1199px) {
+      display: flex;
+      align-items: center;
+      gap: toRem(10) toRem(20);
+      flex-wrap: wrap;
+    }
+    li {
+      padding: toRem(25) 0;
+      border-bottom: toRem(1) solid $stroke;
+      @media screen and (max-width: 1199px) {
+        position: relative;
+        padding: 0;
+        border-bottom: none;
+      }
+      a {
+        @media screen and (max-width: 1199px) {
+          padding: toRem(5) toRem(10);
+          background-color: $body-bg;
+          border-radius: toRem(5);
+        }
+        &.active,
+        &:hover {
+          @media screen and (max-width: 1199px) {
+            background-color: $main-color;
+            span {
+              color: $white !important;
+            }
+          }
+        }
+        .d-flex {
+          @media screen and (max-width: 1199px) {
+            display: none !important;
+          }
+        }
+      }
+      // &::before {
+      //   content: "";
+      //   position: absolute;
+      //   top: 50%;
+      //   right: calc(-1 * toRem(10));
+      //   transform: translateY(-50%);
+      //   width: toRem(1);
+      //   height: toRem(22);
+      //   background-color: $stroke;
+      //   display: none;
+      //   @media screen and (max-width: 1199px) and (min-width: 576px) {
+      //     display: block;
+      //   }
+      // }
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+}
+/* Overlap Images */
+.overlap-images {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  img {
+    flex-shrink: 0;
+    width: toRem(30);
+    height: toRem(30);
+    border: toRem(1) solid $white;
+    border-radius: 50%;
+    overflow: hidden;
+    &:not(:first-child) {
+      margin-left: calc(-1 * toRem(11));
+    }
+    &:not(:nth-child(1), :nth-child(2)) {
+      display: none;
+    }
+  }
+  .iconPlus {
+    display: none;
+    flex-shrink: 0;
+    width: toRem(30);
+    height: toRem(30);
+    border: toRem(1) solid $light-border;
+    border-radius: 50%;
+    margin-left: calc(-1 * toRem(11));
+    background-color: $white-200;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+    @include fontFamily(12, $fw_semiBold, 16, $textBlack);
+  }
+  &:has(img:nth-child(3)) {
+    .iconPlus {
+      display: flex;
+    }
+  }
+}
+.overlap-images-2 {
+  flex-shrink: 0;
+  display: flex;
+  gap: toRem(4);
+  align-items: center;
+  button {
+    flex-shrink: 0;
+    img {
+      width: toRem(30);
+      height: toRem(30);
+      border: toRem(1) solid $white;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    // &:not(:first-child) {
+    //   margin-left: calc(-1 * toRem(11));
+    // }
+    &:not(:nth-child(1), :nth-child(2), :nth-child(3)) {
+      display: none;
+    }
+  }
+  .iconPlus {
+    display: none;
+    flex-shrink: 0;
+    width: toRem(30);
+    height: toRem(30);
+    border: toRem(1) solid $light-border;
+    border-radius: 50%;
+    margin-left: calc(-1 * toRem(11));
+    background-color: $white-200;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+    @include fontFamily(12, $fw_semiBold, 16, $textBlack);
+    z-index: 1;
+  }
+  &:has(button:nth-child(4)) {
+    .iconPlus {
+      display: flex;
+    }
+  }
+}
+/* scrollable-scrollbar */
+.sf-scrollable-scrollbar {
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: toRem(6);
+  }
+  &::-webkit-scrollbar-track {
+    background: $scroll-track;
+    border-radius: toRem(50);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-thumb;
+    border-radius: toRem(50);
+  }
+}
+.scrollable-scrollbar {
+  max-height: toRem(800);
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: toRem(6);
+  }
+  &::-webkit-scrollbar-track {
+    background: $scroll-track;
+    border-radius: toRem(50);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $scroll-thumb;
+    border-radius: toRem(50);
+  }
+}
+/* Dashboard Summary */
+.dashboard-summary {
+  &-wrap {
+    .dashboard-summary-item {
+      border-right: toRem(1) solid $light-border;
+      height: 100%;
+    }
+    .row {
+      div {
+        &:last-child {
+          .dashboard-summary-item {
+            border-right: none;
+          }
+        }
+      }
+    }
+  }
+}
+/* Employees and Goal Details */
+.emGoalDetails-short-info {
+  li {
+    @media screen and (min-width: 350px) and (max-width: 575px) {
+      flex-basis: calc(50% - toRem(10));
+    }
+  }
+}
+.goal-point-field {
+  display: flex;
+  gap: toRem(3);
+  padding: toRem(11);
+  border: toRem(1) solid var(--light-border);
+  border-radius: toRem(4);
+  &:hover {
+    border-color: $main-color;
+  }
+}
+.appraisement-feedback {
+  position: absolute;
+  top: calc(-1 * toRem(13));
+  right: toRem(11);
+  background-color: white;
+  box-shadow: toRem(5) toRem(6) toRem(25) toRem(0) #0000001a;
+  padding: 0 toRem(5);
+  border: toRem(1) solid var(--light-border);
+  border-radius: toRem(50);
+  display: flex;
+  align-items: center;
+  gap: toRem(3);
+  .sf-rating-group {
+    display: inline-flex;
+    gap: toRem(3);
+  }
+  .rating__icon {
+    pointer-events: none;
+    display: flex;
+  }
+  .rating__input {
+    position: absolute !important;
+    left: -9999px !important;
+  }
+  .rating__input--none {
+    display: none;
+  }
+  .rating__label {
+    cursor: pointer;
+    display: flex;
+  }
+  .rating__input:checked ~ .rating__label .rating__icon--star {
+    svg {
+      path {
+        fill: $disabled;
+      }
+    }
+  }
+  .sf-rating-group:hover .rating__label .rating__icon--star {
+    svg {
+      path {
+        fill: $yellow;
+      }
+    }
+  }
+  .rating__input:hover ~ .rating__label .rating__icon--star {
+    svg {
+      path {
+        fill: $disabled;
+      }
+    }
+  }
+}
+
+button[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease;
+  visibility: visible;
+}
+button[data-title]:after {
+  content: attr(data-title);
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: toRem(3) toRem(12);
+  white-space: nowrap;
+  border-radius: toRem(50);
+  box-shadow: 0 toRem(4) toRem(35.2) 0 rgba(136, 133, 133, 0.25);
+  font-size: toRem(10);
+  font-weight: 600;
+  color: $para-text;
+  background-color: $white;
+  opacity: 0;
+  z-index: 99999;
+  visibility: hidden;
+}
+button[data-title]::before {
+  content: "";
+  position: absolute;
+  top: 115%;
+  left: 50%;
+  width: toRem(8);
+  height: toRem(8);
+  background-color: $white;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 100000;
+}
+button[data-title] {
+  position: relative;
+}
