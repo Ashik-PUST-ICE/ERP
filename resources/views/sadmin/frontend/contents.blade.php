@@ -109,7 +109,16 @@
                     @if ($isService)
                     <div class="col-12">
                         <label class="zForm-label">{{ __('Bullet Points') }} <small class="text-para-text">({{ __('one per line') }})</small></label>
-                        <textarea name="others" rows="4" class="form-control zForm-control" placeholder="{{ __('Feature 1') }}&#10;{{ __('Feature 2') }}"></textarea>
+                        <div id="othersList" class="mb-12">
+                            <div class="d-flex align-items-center mb-8 others-row">
+                                <input type="text" class="form-control zForm-control others-input" placeholder="{{ __('Feature 1') }}">
+                                <button type="button" class="btn-remove-other p-8 ms-8 bd-ra-4 border-0 bg-eaeaea text-para-text">&times;</button>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <button type="button" id="addOtherBtn" class="py-8 px-12 bd-ra-4 bg-main-color text-white fw-500 border-0">{{ __('Add more') }}</button>
+                        </div>
+                        <textarea name="others" id="othersHidden" class="d-none"></textarea>
                     </div>
                     @endif
                     @if ($isTestimonial)
@@ -186,7 +195,11 @@
                     @if ($isService)
                     <div class="col-12">
                         <label class="zForm-label">{{ __('Bullet Points') }} <small class="text-para-text">({{ __('one per line') }})</small></label>
-                        <textarea name="others" id="editOthers" rows="4" class="form-control zForm-control"></textarea>
+                        <div id="editOthersList" class="mb-12"></div>
+                        <div class="d-flex">
+                            <button type="button" id="editAddOtherBtn" class="py-8 px-12 bd-ra-4 bg-main-color text-white fw-500 border-0">{{ __('Add more') }}</button>
+                        </div>
+                        <textarea name="others" id="editOthersHidden" class="d-none"></textarea>
                     </div>
                     @endif
                     @if ($isTestimonial)
@@ -237,9 +250,42 @@ const routes = {
 };
 
 $(function () {
-    // Add
+    // Helpers: add a bullet input row into the given list
+    function addOtherRow(listSelector, value = '') {
+        const row = $(
+            '<div class="d-flex align-items-center mb-8 others-row">' +
+                '<input type="text" class="form-control zForm-control others-input" />' +
+                '<button type="button" class="btn-remove-other p-8 ms-8 bd-ra-4 border-0 bg-eaeaea text-para-text">&times;</button>' +
+            '</div>'
+        );
+        row.find('.others-input').val(value);
+        $(listSelector).append(row);
+    }
+
+    // Remove handler (delegated)
+    $(document).on('click', '.btn-remove-other', function () {
+        $(this).closest('.others-row').remove();
+    });
+
+    // Add buttons
+    $(document).on('click', '#addOtherBtn', function () { addOtherRow('#othersList', ''); });
+    $(document).on('click', '#editAddOtherBtn', function () { addOtherRow('#editOthersList', ''); });
+
+    // Collect inputs and place into hidden textarea (newline separated)
+    function collectOthersTo(selectorList, hiddenSelector) {
+        const vals = $(selectorList).find('.others-input').map(function () { return $(this).val().trim(); }).get().filter(Boolean);
+        $(hiddenSelector).val(vals.join('\n'));
+    }
+
+    // Ensure add modal has at least one input
+    if ($('#othersList').length && $('#othersList').children().length === 0) {
+        addOtherRow('#othersList', '');
+    }
+
+    // Add — submit (aggregate others)
     $('#addForm').on('submit', function (e) {
         e.preventDefault();
+        if ($('#othersList').length) collectOthersTo('#othersList', '#othersHidden');
         const btn = $('#addBtn').prop('disabled', true).text('{{ __("Saving...") }}');
         $.ajax({
             url : routes.store, type : 'POST',
@@ -264,20 +310,33 @@ $(function () {
             if ($('#editName').length)       $('#editName').val(d.name ?? '');
             if ($('#editSubTitle').length)   $('#editSubTitle').val(d.sub_title ?? '');
             if ($('#editDescription').length)$('#editDescription').val(d.description ?? '');
-            if ($('#editOthers').length)     $('#editOthers').val(d.others_text ?? '');
             if ($('#editRating').length)     $('#editRating').val(d.rating ?? 5);
             $('#editSortOrder').val(d.sort_order ?? 0);
             $('#editStatus').val(d.status ?? 1);
             if (d.image) {
                 $('#editCurrentImg').html('<img src="{{ asset('') }}' + d.image + '" style="max-height:50px;border-radius:4px;">');
             }
+
+            // populate others into edit list
+            if ($('#editOthersList').length) {
+                $('#editOthersList').empty();
+                const lines = (d.others_text || '')
+                    .split(/\r?\n/) .map(s => s.trim()) .filter(Boolean);
+                if (lines.length) {
+                    lines.forEach(l => addOtherRow('#editOthersList', l));
+                } else {
+                    addOtherRow('#editOthersList', '');
+                }
+            }
+
             $('#editModal').modal('show');
         });
     });
 
-    // Edit — submit
+    // Edit — submit (aggregate others)
     $('#editForm').on('submit', function (e) {
         e.preventDefault();
+        if ($('#editOthersList').length) collectOthersTo('#editOthersList', '#editOthersHidden');
         const id  = $('#editId').val();
         const btn = $('#editBtn').prop('disabled', true).text('{{ __("Updating...") }}');
         $.ajax({
