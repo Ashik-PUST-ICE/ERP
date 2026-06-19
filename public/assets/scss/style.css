@@ -4909,12 +4909,18 @@ textarea.zForm-control-textarea-2 {
 }
 
 .headerUserDropdown {
-  background-color: var(--white);
+  background-color: transparent;
 }
 .headerUserDropdown .dropdown-toggle .user-content {
   display: flex;
   align-items: center;
   column-gap: 0.75rem;
+}
+.headerUserDropdown .dropdown-toggle .user-content h4 {
+  color: var(--white) !important;
+}
+.headerUserDropdown .dropdown-toggle .user-content .img {
+  border: 2px solid rgba(255,255,255,0.08);
 }
 .headerUserDropdown .dropdown-toggle .user-content .wrap {
   position: relative;
@@ -5687,12 +5693,24 @@ scrollUp
   position: sticky;
   top: 0;
   padding: 1.3125rem 1.875rem;
-  background-color: var(--white);
+  background-color: var(--sidebar-bg) !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+/* ensure header text and icons are readable on dark bg */
+.zMainContent .main-header,
+.zMainContent .main-header .breadcrumb,
+.zMainContent .main-header .breadcrumb a,
+.zMainContent .main-header .right,
+.zMainContent .main-header .right * {
+  color: var(--white) !important;
+}
+/* force username white even if .text-dark-color is present */
+.zMainContent .main-header .headerUserDropdown .dropdown-toggle .user-content h4.text-dark-color {
+  color: var(--white) !important;
 }
 @media screen and (max-width: 575px) {
   .zMainContent .main-header {
