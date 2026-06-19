@@ -106,8 +106,9 @@ class PackageService
                     $package->icon = 'storage/' . $uploaded->path;
                 }
             }
-            $package->page_limit = $request->page_limit;
-            $package->message_limit = $request->message_limit;
+            $package->max_questions = $request->max_questions;
+            $package->max_teachers = $request->max_teachers;
+            $package->max_question_sets = $request->max_question_sets;
 
             $package->others = $request->others ?? [];
             $package->status = $request->status ? ACTIVE : DEACTIVATE;
@@ -123,8 +124,9 @@ class PackageService
 
             // user subscription update
             UserPackage::where('package_id', $package->id)->update([
-                'page_limit' => $package->page_limit,
-                'message_limit' => $package->message_limit,
+                'max_questions' => $package->max_questions,
+                'max_teachers' => $package->max_teachers,
+                'max_question_sets' => $package->max_question_sets,
             ]);
 
             DB::commit();

@@ -56,9 +56,12 @@
                 ['icon' => 'fa-solid fa-sack-dollar', 'color' => '#059669', 'label' => __('Paid revenue (all time)'), 'value' => $revDisplay],
                 ['icon' => 'fa-solid fa-receipt', 'color' => '#0ea5e9', 'label' => __('Paid orders (total)'), 'value' => $paidOrdersTotal],
                 ['icon' => 'fa-solid fa-box-open', 'color' => '#f59e0b', 'label' => __('Subscription plans'), 'value' => $subscriptionPlans],
-                ['icon' => 'fa-solid fa-plug', 'color' => '#14b8a6', 'label' => __('Connected platforms'), 'value' => $connectedPlatforms],
                 ['icon' => 'fa-solid fa-calendar-week', 'color' => '#ef4444', 'label' => __('Revenue (this month)'), 'value' => $revMonthDisplay],
             ];
+
+            $formatLimit = function ($value, $unlimitedLabel) {
+                return is_null($value) ? __($unlimitedLabel) : number_format($value);
+            };
         @endphp
         {{-- Summary cards (same shell as admin dashboard: padding, icon, fs-24 value) --}}
         <div class="row rg-20 pb-26">
@@ -86,7 +89,7 @@
                         <i class="fa-solid fa-circle-info text-main-color me-2"></i>{{ __('Plans & revenue') }}
                     </p>
                     <p class="fs-13 text-para-text mb-0">
-                        {{ __('Each row shows how many business users are on a plan, how many paid orders that plan has generated, and total paid revenue from those orders.') }}
+                        {{ __('Each row shows package limits, active business users, paid orders, and total paid revenue from those orders.') }}
                     </p>
                 </div>
             </div>
@@ -107,6 +110,9 @@
                                 <thead>
                                     <tr>
                                         <th><div>{{ __('Plan') }}</div></th>
+                                        <th><div class="text-nowrap">{{ __('Questions') }}</div></th>
+                                        <th><div class="text-nowrap">{{ __('Teachers') }}</div></th>
+                                        <th><div class="text-nowrap">{{ __('Question Sets') }}</div></th>
                                         <th><div class="text-nowrap">{{ __('Users on plan') }}</div></th>
                                         <th><div class="text-nowrap">{{ __('Paid orders') }}</div></th>
                                         <th class="text-end"><div class="text-nowrap">{{ __('Paid revenue') }}</div></th>
@@ -116,6 +122,9 @@
                                     @foreach ($planRows as $pr)
                                         <tr>
                                             <td class="fw-500 text-textBlack">{{ $pr->name }}</td>
+                                            <td>{{ $formatLimit($pr->max_questions, 'Unlimited') }}</td>
+                                            <td>{{ $formatLimit($pr->max_teachers, 'Unlimited') }}</td>
+                                            <td>{{ $formatLimit($pr->max_question_sets, 'Unlimited') }}</td>
                                             <td>{{ $pr->active_users }}</td>
                                             <td>{{ $pr->paid_orders }}</td>
                                             <td class="text-end fw-600">

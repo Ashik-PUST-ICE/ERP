@@ -405,10 +405,10 @@
                                         <img src="{{asset('assets/images/icon/features-check-icon.svg')}}" alt="{{ $package->name }}" />
                                     </div>
                                     <p class="fs-18 fw-400 lh-22 text-para-text">
-                                        @if ($package->page_limit == -1)
-                                            {{ __('Unlimited Pages') }}
+                                        @if (is_null($package->max_questions))
+                                            {{ __('Unlimited Questions') }}
                                         @else
-                                            {{ __('Up to :n Pages', ['n' => $package->page_limit]) }}
+                                            {{ __('Up to :n Questions', ['n' => number_format($package->max_questions)]) }}
                                         @endif
                                     </p>
                                 </div>
@@ -419,10 +419,24 @@
                                         <img src="{{asset('assets/images/icon/features-check-icon.svg')}}" alt="{{ $package->name }}" />
                                     </div>
                                     <p class="fs-18 fw-400 lh-22 text-para-text">
-                                        @if ($package->message_limit == -1)
-                                            {{ __('Unlimited Messages/Month') }}
+                                        @if (is_null($package->max_teachers))
+                                            {{ __('Unlimited Teachers') }}
                                         @else
-                                            {{ number_format($package->message_limit) }} {{ __('Messages/Month') }}
+                                            {{ __('Up to :n Teachers', ['n' => number_format($package->max_teachers)]) }}
+                                        @endif
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex align-items-start g-10">
+                                    <div class="flex-shrink-0 d-flex justify-content-center align-items-center w-15 h-15 rounded-circle bg-main-color mt-4">
+                                        <img src="{{asset('assets/images/icon/features-check-icon.svg')}}" alt="{{ $package->name }}" />
+                                    </div>
+                                    <p class="fs-18 fw-400 lh-22 text-para-text">
+                                        @if (is_null($package->max_question_sets))
+                                            {{ __('Unlimited Question Sets') }}
+                                        @else
+                                            {{ __('Up to :n Question Sets', ['n' => number_format($package->max_question_sets)]) }}
                                         @endif
                                     </p>
                                 </div>

@@ -40,8 +40,9 @@ class PackageRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:packages,slug,' . $this->id,
-            'page_limit' => 'required|integer|min:0',
-            'message_limit' => 'required|integer|min:0',
+            'max_questions' => 'nullable|integer|min:0',
+            'max_teachers' => 'nullable|integer|min:0',
+            'max_question_sets' => 'nullable|integer|min:0',
             'monthly_price' => 'required|numeric|min:0',
             'yearly_price' => 'required|numeric|min:0',
         ];

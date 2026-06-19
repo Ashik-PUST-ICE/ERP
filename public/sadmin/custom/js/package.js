@@ -60,8 +60,9 @@
         selector.find('input[name=id]').val(response.data.id);
         // Do not set .val() on file inputs (browser security — can throw and block the modal).
         selector.find('input[name=name]').val(response.data.name);
-        selector.find('input[name=page_limit]').val(response.data.page_limit);
-        selector.find('input[name=message_limit]').val(response.data.message_limit);
+        selector.find('input[name=max_questions]').val(response.data.max_questions);
+        selector.find('input[name=max_teachers]').val(response.data.max_teachers);
+        selector.find('input[name=max_question_sets]').val(response.data.max_question_sets);
 
         // others — API may send array (Package cast) or legacy JSON string
         var otherHtmlFields = '';

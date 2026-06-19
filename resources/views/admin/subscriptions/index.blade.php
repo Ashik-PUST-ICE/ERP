@@ -40,10 +40,10 @@
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
                                 <h4 class="flex-grow-1 fs-18 fw-400 lh-28 text-title-black">
-                                    @if ($userPackage->page_limit == -1)
-                                        {{ __('Unlimited Pages') }}
+                                    @if (is_null($userPackage->max_questions))
+                                        {{ __('Unlimited Questions') }}
                                     @else
-                                        {{ __('Up to :n Pages', ['n' => $userPackage->page_limit]) }}
+                                        {{ __('Up to :n Questions', ['n' => number_format($userPackage->max_questions)]) }}
                                     @endif
                                 </h4>
                             </div>
@@ -54,10 +54,24 @@
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                 </div>
                                 <h4 class="flex-grow-1 fs-18 fw-400 lh-28 text-title-black">
-                                    @if ($userPackage->message_limit == -1)
-                                        {{ __('Unlimited Messages/Month') }}
+                                    @if (is_null($userPackage->max_teachers))
+                                        {{ __('Unlimited Teachers') }}
                                     @else
-                                        {{ number_format($userPackage->message_limit) }} {{ __('Messages/Month') }}
+                                        {{ __('Up to :n Teachers', ['n' => number_format($userPackage->max_teachers)]) }}
+                                    @endif
+                                </h4>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex align-items-center cg-10">
+                                <div class="text-title-black">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                                <h4 class="flex-grow-1 fs-18 fw-400 lh-28 text-title-black">
+                                    @if (is_null($userPackage->max_question_sets))
+                                        {{ __('Unlimited Question Sets') }}
+                                    @else
+                                        {{ __('Up to :n Question Sets', ['n' => number_format($userPackage->max_question_sets)]) }}
                                     @endif
                                 </h4>
                             </div>

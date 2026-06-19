@@ -18,8 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('package_id');
             $table->string('name');
-            $table->integer('page_limit')->default(0);
-            $table->integer('message_limit')->default(0);
+            $table->integer('max_questions')->nullable()->comment('null = unlimited');
+            $table->integer('max_teachers')->nullable()->comment('null = unlimited');
+            $table->integer('max_question_sets')->nullable()->comment('null = unlimited');
             $table->decimal('monthly_price', 8, 2)->default(0);
             $table->decimal('yearly_price', 8, 2)->default(0);
             $table->dateTime('start_date');

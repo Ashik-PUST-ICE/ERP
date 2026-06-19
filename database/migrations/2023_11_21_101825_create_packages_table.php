@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('icon')->nullable();
             $table->string('slug');
-            $table->integer('page_limit')->nullable()->default(0);
-            $table->integer('message_limit')->nullable()->default(0);
+            $table->integer('max_questions')->nullable()->comment('null = unlimited');
+            $table->integer('max_teachers')->nullable()->comment('null = unlimited');
+            $table->integer('max_question_sets')->nullable()->comment('null = unlimited');
             $table->text('others')->nullable();
             $table->decimal('monthly_price', 12, 2)->default(0.00);
             $table->decimal('yearly_price', 12, 2)->default(0.00);

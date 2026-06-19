@@ -190,5 +190,6 @@ const AI_LANGUAGE_AUTO = 'auto';
 
 // ─── SocialAgent: Package Limit Rule Keys ─────────────────────────────────────
 // These match the field names used inside getAdminLimit() in Helper.php
-const RULES_PAGE_LIMIT    = 'page_limit';
-const RULES_MESSAGE_LIMIT = 'message_limit';
+const RULES_MAX_QUESTIONS     = 'max_questions';
+const RULES_MAX_TEACHERS      = 'max_teachers';
+const RULES_MAX_QUESTION_SETS = 'max_question_sets';

@@ -1564,7 +1564,7 @@ if (!function_exists('getAdminLimit')) {
      *   true                   → no limit / unlimited (-1) or no package check needed
      *   false                  → no active package found — deny access
      *
-     * @param string $type  RULES_PAGE_LIMIT | RULES_MESSAGE_LIMIT
+     * @param string $type  RULES_MAX_QUESTIONS | RULES_MAX_TEACHERS | RULES_MAX_QUESTION_SETS
      * @param int|null $userId  defaults to auth()->id()
      */
     function getAdminLimit(string $type, ?int $userId = null): int|bool
@@ -1582,31 +1582,33 @@ if (!function_exists('getAdminLimit')) {
             return false;
         }
 
-        if ($type === RULES_PAGE_LIMIT) {
-            // -1 means unlimited
-            if ($userPackage->page_limit == -1) {
-                return true;
-            }
-            $used   = \App\Models\PlatformConnection::where('user_id', $userId)->count();
-            $remain = max(0, $userPackage->page_limit - $used);
-            return $remain;
+        $limitColumns = [
+            RULES_MAX_QUESTIONS => ['questions', 'max_questions'],
+            RULES_MAX_TEACHERS => ['teachers', 'max_teachers'],
+            RULES_MAX_QUESTION_SETS => ['question_sets', 'max_question_sets'],
+        ];
+
+        if (!array_key_exists($type, $limitColumns)) {
+            return true;
         }
 
-        if ($type === RULES_MESSAGE_LIMIT) {
-            // -1 means unlimited
-            if ($userPackage->message_limit == -1) {
-                return true;
-            }
-            // Count outbound messages sent since this subscription started
-            $used   = \App\Models\Message::where('user_id', $userId)
-                ->where('direction', MESSAGE_DIRECTION_OUTBOUND)
-                ->whereDate('created_at', '>=', $userPackage->start_date)
-                ->count();
-            $remain = max(0, $userPackage->message_limit - $used);
-            return $remain;
+        [$table, $column] = $limitColumns[$type];
+        $limit = $userPackage->{$column};
+
+        if (is_null($limit)) {
+            return true;
         }
 
-        return true;
+        if (!\Illuminate\Support\Facades\Schema::hasTable($table)) {
+            return max(0, (int) $limit);
+        }
+
+        $query = \Illuminate\Support\Facades\DB::table($table);
+        if (\Illuminate\Support\Facades\Schema::hasColumn($table, 'user_id')) {
+            $query->where('user_id', $userId);
+        }
+
+        return max(0, (int) $limit - $query->count());
     }
 }
 
@@ -1832,8 +1834,9 @@ if (!function_exists('setUserPackage')) {
             'user_id' => $userId,
             'package_id' => $package->id,
             'name' => $package->name,
-            'page_limit' => $package->page_limit,
-            'message_limit' => $package->message_limit,
+            'max_questions' => $package->max_questions,
+            'max_teachers' => $package->max_teachers,
+            'max_question_sets' => $package->max_question_sets,
             'monthly_price' => $package->monthly_price,
             'yearly_price' => $package->yearly_price,
             'order_id' => $orderId,
@@ -2096,4 +2099,3 @@ if (!function_exists('get_domain_name')) {
         return trim($host);
     }
 }
-

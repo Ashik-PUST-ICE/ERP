@@ -85,16 +85,19 @@
                                 </div>
                             </div>
                             <div>
-                                <label for="page_limit" class="zForm-label">{{ __('Page Limit') }} <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" name="page_limit" id="page_limit"
-                                       placeholder="{{ __('Page Limit') }}" class="form-control zForm-control mb-8">
+                                <label for="max_questions" class="zForm-label">{{ __('Max Questions') }}</label>
+                                <input type="number" name="max_questions" id="max_questions" min="0"
+                                       placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
                             </div>
                             <div>
-                                <label for="message_limit" class="zForm-label">{{ __('Message Limit') }} <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" name="message_limit" id="message_limit"
-                                       placeholder="{{ __('Message Limit') }}" class="form-control zForm-control mb-8">
+                                <label for="max_teachers" class="zForm-label">{{ __('Max Teachers') }}</label>
+                                <input type="number" name="max_teachers" id="max_teachers" min="0"
+                                       placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
+                            </div>
+                            <div>
+                                <label for="max_question_sets" class="zForm-label">{{ __('Max Question Sets') }}</label>
+                                <input type="number" name="max_question_sets" id="max_question_sets" min="0"
+                                       placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
                             </div>
                         </div>
 
@@ -216,16 +219,19 @@
                                 </div>
                             </div>
                             <div>
-                                <label for="page_limit" class="zForm-label">{{ __('Page Limit') }} <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" name="page_limit" id="page_limit"
-                                       placeholder="{{ __('Page Limit') }}" class="form-control zForm-control mb-8">
+                                <label for="edit_max_questions" class="zForm-label">{{ __('Max Questions') }}</label>
+                                <input type="number" name="max_questions" id="edit_max_questions" min="0"
+                                       placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
                             </div>
                             <div>
-                                <label for="message_limit" class="zForm-label">{{ __('Message Limit') }} <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" name="message_limit" id="message_limit"
-                                       placeholder="{{ __('Message Limit') }}" class="form-control zForm-control mb-8">
+                                <label for="edit_max_teachers" class="zForm-label">{{ __('Max Teachers') }}</label>
+                                <input type="number" name="max_teachers" id="edit_max_teachers" min="0"
+                                       placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
+                            </div>
+                            <div>
+                                <label for="edit_max_question_sets" class="zForm-label">{{ __('Max Question Sets') }}</label>
+                                <input type="number" name="max_question_sets" id="edit_max_question_sets" min="0"
+                                       placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
                             </div>
                         </div>
 

@@ -11,7 +11,7 @@ use App\Models\UserPackage;
 class SubscriptionService
 {
     /**
-     * Active subscription row for the user (snapshot: page_limit, message_limit, name, etc.).
+     * Active subscription row for the user (snapshot: package limits, name, etc.).
      */
     public function getCurrentPackage($userId = null)
     {
