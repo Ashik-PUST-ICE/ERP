@@ -68,6 +68,41 @@
                 </li>
 
 
+                 {{-- ── AI ────────────────────────────────────────────────────── --}}
+                <li class="zSidebar-label">
+                    <span>{{ __('AI Agent') }}</span>
+                </li>
+
+                {{-- AI Settings --}}
+                <li>
+                    <a href="{{ route('admin.ai-agent.index') }}"
+                        class="d-flex align-items-center cg-21 {{ @$activeAiAgent }}">
+                        <div class="d-flex">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2Z" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 21H15" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M9 18V19.5C9 20.33 9.67 21 10.5 21H13.5C14.33 21 15 20.33 15 19.5V18" stroke="#7881A4" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <span>{{ __('AI Configuration') }}</span>
+                    </a>
+                </li>
+
+                {{-- Agent Knowledge --}}
+                <li>
+                    <a href="{{ route('admin.ai-agent.knowledge') }}"
+                        class="d-flex align-items-center cg-21 {{ @$activeAiKnowledge }}">
+                        <div class="d-flex">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span>{{ __('Agent Knowledge') }}</span>
+                    </a>
+                </li>
+
+
+
 
                 {{-- ── Management ──────────────────────────────────────────────── --}}
                 <li class="zSidebar-label">
