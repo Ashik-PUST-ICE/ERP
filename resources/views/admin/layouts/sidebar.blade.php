@@ -33,103 +33,7 @@
                     </a>
                 </li>
 
-                {{-- ── Messaging ─────────────────────────────────────────────── --}}
-                <li class="zSidebar-label">
-                    <span>{{ __('Messaging') }}</span>
-                </li>
-
-                {{-- Platforms --}}
-                <li>
-                    <a href="{{ route('admin.platforms.index') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activePlatforms }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.4 3H4.6C3.72 3 3 3.72 3 4.6V8.4C3 9.28 3.72 10 4.6 10H8.4C9.28 10 10 9.28 10 8.4V4.6C10 3.72 9.28 3 8.4 3Z" stroke="#7881A4" stroke-width="1.5"/>
-                                <path d="M19.4 3H15.6C14.72 3 14 3.72 14 4.6V8.4C14 9.28 14.72 10 15.6 10H19.4C20.28 10 21 9.28 21 8.4V4.6C21 3.72 20.28 3 19.4 3Z" stroke="#7881A4" stroke-width="1.5"/>
-                                <path d="M8.4 14H4.6C3.72 14 3 14.72 3 15.6V19.4C3 20.28 3.72 21 4.6 21H8.4C9.28 21 10 20.28 10 19.4V15.6C10 14.72 9.28 14 8.4 14Z" stroke="#7881A4" stroke-width="1.5"/>
-                                <path d="M17.5 14V21M14 17.5H21" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Platforms') }}</span>
-                    </a>
-                </li>
-
-                {{-- Connect Account --}}
-                <li>
-                    <a href="{{ route('admin.meta-oauth.picker') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeMetaPicker }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14 11.998C14 9.506 11.683 7 8.857 7C7.429 7 6.143 7.636 5.286 8.636C4.429 9.636 4 10.998 4 11.998C4 13.002 4.429 14.364 5.286 15.364C6.143 16.364 7.429 17 8.857 17C11.683 17 14 14.494 14 11.998Z" stroke="#7881A4" stroke-width="1.5" stroke-miterlimit="10"/>
-                                <path d="M10 11.998C10 14.49 12.317 17 15.143 17C16.571 17 17.857 16.364 18.714 15.364C19.571 14.364 20 13.002 20 11.998C20 10.994 19.571 9.632 18.714 8.632C17.857 7.632 16.571 7 15.143 7C12.317 7 10 9.506 10 11.998Z" stroke="#7881A4" stroke-width="1.5" stroke-miterlimit="10"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Connect Account') }}</span>
-                    </a>
-                </li>
-
-                {{-- Inbox --}}
-                <li>
-                    <a href="{{ route('admin.inbox.index') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeInbox }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 12H8.01M12 12H12.01M16 12H16.01M21 12C21 16.418 16.97 20 12 20C10.5 20 9.07 19.66 7.8 19.06L3 20L4.44 15.77C3.53 14.43 3 12.78 3 11C3 6.582 7.03 3 12 3C16.97 3 21 6.582 21 11C21 11.34 20.98 11.67 20.94 12H21Z" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Inbox') }}</span>
-                    </a>
-                </li>
-
-                {{-- ── AI ────────────────────────────────────────────────────── --}}
-                <li class="zSidebar-label">
-                    <span>{{ __('AI Agent') }}</span>
-                </li>
-
-                {{-- AI Settings --}}
-                <li>
-                    <a href="{{ route('admin.ai-agent.index') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeAiAgent }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2Z" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 21H15" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round"/>
-                                <path d="M9 18V19.5C9 20.33 9.67 21 10.5 21H13.5C14.33 21 15 20.33 15 19.5V18" stroke="#7881A4" stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('AI Configuration') }}</span>
-                    </a>
-                </li>
-
-                {{-- Agent Knowledge --}}
-                <li>
-                    <a href="{{ route('admin.ai-agent.knowledge') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeAiKnowledge }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Agent Knowledge') }}</span>
-                    </a>
-                </li>
-
-                {{-- Quick Reply Templates --}}
-                <li>
-                    <a href="{{ route('admin.reply-templates.index') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeReplyTemplates }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M13 2V9H20" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 15H15" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round"/>
-                                <path d="M9 11H15" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Reply Templates') }}</span>
-                    </a>
-                </li>
-
+                
                 {{-- ── Email ───────────────────────────────────────────────────── --}}
                 <li class="zSidebar-label">
                     <span>{{ __('Email') }}</span>
@@ -163,42 +67,7 @@
                     </a>
                 </li>
 
-                {{-- ── Configuration ──────────────────────────────────────────── --}}
-                <li class="zSidebar-label">
-                    <span>{{ __('Configuration') }}</span>
-                </li>
 
-                {{-- Payment Gateways --}}
-                @can('Manage Application Setting')
-                <li>
-                    <a href="{{ route('admin.setting.gateway.index') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeGateway }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 8.5H22" stroke="#7881A4" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M6 16.5H8" stroke="#7881A4" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10.5 16.5H14.5" stroke="#7881A4" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M22 14.03V16.11C22 19.62 21.11 20.5 17.56 20.5H6.44C2.89 20.5 2 19.62 2 16.11V7.89C2 4.38 2.89 3.5 6.44 3.5H17.56C21.11 3.5 22 4.38 22 7.89V10.5" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Payment Gateways') }}</span>
-                    </a>
-                </li>
-                @endcan
-
-                {{-- Meta App Config (FB/IG/WA credentials) --}}
-                <li>
-                    <a href="{{ route('admin.meta-app.index') }}"
-                        class="d-flex align-items-center cg-21 {{ @$activeMetaApp }}">
-                        <div class="d-flex">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" stroke="#7881A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7 7h.01" stroke="#7881A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <span>{{ __('Meta App Config') }}</span>
-                    </a>
-                </li>
 
                 {{-- ── Management ──────────────────────────────────────────────── --}}
                 <li class="zSidebar-label">
