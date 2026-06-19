@@ -4605,6 +4605,27 @@ textarea.zForm-control-textarea-2 {
 .dropdownItem-one button.active.deleteItem)) svg circle {
   stroke: var(--main-color);
 }
+
+/* Header-scoped dropdown: use dark bg and white text/icons so items are visible on dark header */
+.zMainContent .main-header .right .dropdownItem-one {
+  background-color: var(--sidebar-bg) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+  box-shadow: none !important;
+}
+.zMainContent .main-header .right .dropdownItem-one a,
+.zMainContent .main-header .right .dropdownItem-one button,
+.zMainContent .main-header .right .dropdownItem-one p {
+  color: var(--white) !important;
+}
+.zMainContent .main-header .right .dropdownItem-one svg path,
+.zMainContent .main-header .right .dropdownItem-one svg circle {
+  fill: var(--white) !important;
+  stroke: var(--white) !important;
+}
+.zMainContent .main-header .right .dropdownItem-one a:hover,
+.zMainContent .main-header .right .dropdownItem-one button:hover {
+  color: var(--main-color) !important;
+}
 .dropdownItem-one a:hover.deleteItem, .dropdownItem-one a.active.deleteItem,
 .dropdownItem-one button:hover.deleteItem,
 .dropdownItem-one button.active.deleteItem {
