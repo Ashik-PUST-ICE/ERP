@@ -68,8 +68,8 @@
                         <div class="col-12">
                             <label class="zForm-label">{{ __('Status') }} <span class="text-danger">*</span></label>
                             <select name="status" class="sf-select-without-search">
-                                <option value="1">{{ __('Active') }}</option>
-                                <option value="2">{{ __('Inactive') }}</option>
+                                <option value="{{ QB_STATUS_ACTIVE }}">{{ __('Active') }}</option>
+                                <option value="{{ QB_STATUS_INACTIVE }}">{{ __('Inactive') }}</option>
                             </select>
                         </div>
                     </div>
@@ -102,8 +102,8 @@
                         <div class="col-12">
                             <label class="zForm-label">{{ __('Status') }} <span class="text-danger">*</span></label>
                             <select name="status" id="editClassStatus" class="sf-select-without-search form-control zForm-control">
-                                <option value="1">{{ __('Active') }}</option>
-                                <option value="2">{{ __('Inactive') }}</option>
+                                <option value="{{ QB_STATUS_ACTIVE }}">{{ __('Active') }}</option>
+                                <option value="{{ QB_STATUS_INACTIVE }}">{{ __('Inactive') }}</option>
                             </select>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
 
     <input type="hidden" id="classesDataRoute" value="{{ route('super-admin.question-bank.classes.index') }}">
     <input type="hidden" id="classInfoRoute" value="{{ route('super-admin.question-bank.classes.get-info') }}">
-    <input type="hidden" id="classUpdateBaseUrl" value="{{ url('sadmin/question-bank/classes') }}">
+    <input type="hidden" id="classUpdateBaseUrl" value="{{ url('sadmin/question-bank/classes/update') }}">
 @endsection
 
 @push('script')

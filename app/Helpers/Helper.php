@@ -2156,3 +2156,16 @@ if (!function_exists('get_domain_name')) {
         return trim($host);
     }
 }
+
+if (!function_exists('getQuestionTypes')) {
+    function getQuestionTypes() {
+        return [
+            QB_QTYPE_MCQ => ['id' => QB_QTYPE_MCQ, 'name' => 'MCQ', 'has_options' => 1],
+            QB_QTYPE_TRUE_FALSE => ['id' => QB_QTYPE_TRUE_FALSE, 'name' => 'True/False', 'has_options' => 0],
+            QB_QTYPE_FILL_BLANK => ['id' => QB_QTYPE_FILL_BLANK, 'name' => 'Fill in Blank', 'has_options' => 0],
+            QB_QTYPE_SHORT => ['id' => QB_QTYPE_SHORT, 'name' => 'Short Question', 'has_options' => 0],
+            QB_QTYPE_LONG => ['id' => QB_QTYPE_LONG, 'name' => 'Long Question', 'has_options' => 0],
+            QB_QTYPE_MATCHING => ['id' => QB_QTYPE_MATCHING, 'name' => 'Matching', 'has_options' => 0],
+        ];
+    }
+}

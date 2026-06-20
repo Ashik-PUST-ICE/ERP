@@ -62,7 +62,7 @@ class AcademicClassController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:classes,name',
             'order' => 'nullable|integer',
-            'status' => 'required|in:1,2'
+            'status' => 'required|in:' . QB_STATUS_ACTIVE . ',' . QB_STATUS_INACTIVE
         ]);
         if ($validator->fails()) {
             return $this->error([], $validator->errors()->first());
@@ -89,7 +89,7 @@ class AcademicClassController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:classes,name,' . $id,
             'order' => 'nullable|integer',
-            'status' => 'required|in:1,2'
+            'status' => 'required|in:' . QB_STATUS_ACTIVE . ',' . QB_STATUS_INACTIVE
         ]);
         if ($validator->fails()) {
             return $this->error([], $validator->errors()->first());

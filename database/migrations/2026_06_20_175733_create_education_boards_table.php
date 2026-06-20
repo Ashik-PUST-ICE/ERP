@@ -6,20 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('topics', function (Blueprint $table) {
+        Schema::create('education_boards', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('chapter_id')->nullable();
-            $table->string('name');
-            $table->integer('order')->default(0);
+            $table->string('name')->unique();
             $table->tinyInteger('status')->default(1)->comment('1=active, 2=inactive');
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('education_boards');
     }
 };

@@ -66,7 +66,7 @@ class ChapterController extends Controller
             'subject_id' => 'required|exists:subjects,id',
             'name' => 'required|string|max:255',
             'order' => 'nullable|integer',
-            'status' => 'required|in:1,2'
+            'status' => 'required|in:' . QB_STATUS_ACTIVE . ',' . QB_STATUS_INACTIVE
         ]);
         if ($validator->fails()) {
             return $this->error([], $validator->errors()->first());
@@ -88,7 +88,7 @@ class ChapterController extends Controller
             'subject_id' => 'required|exists:subjects,id',
             'name' => 'required|string|max:255',
             'order' => 'nullable|integer',
-            'status' => 'required|in:1,2'
+            'status' => 'required|in:' . QB_STATUS_ACTIVE . ',' . QB_STATUS_INACTIVE
         ]);
         if ($validator->fails()) {
             return $this->error([], $validator->errors()->first());

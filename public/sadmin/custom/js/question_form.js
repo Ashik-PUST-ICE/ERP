@@ -109,31 +109,39 @@
         // --- 2. Dynamic Option Builder ---
 
         var optionCount = $('#optionsContainer .option-row').length || 0;
+        var blankCount = $('#blanksContainer .blank-row').length || 1;
+        var matchCount = $('#matchingContainer .match-row').length || 0;
 
         $('#question_type_id').on('change', function () {
-            var selectedOption = $(this).find('option:selected');
-            var hasOptions = selectedOption.data('has-options');
+            var selectedType = parseInt($(this).val());
+            
+            // Hide all dynamic sections first
+            $('.dynamic-section').addClass('d-none');
+            
+            // Remove required attributes from correct answers to avoid validation issues on hidden elements
+            $('#correct_answer_text').removeAttr('required');
 
-            if (hasOptions == 1) {
-                $('#dynamicOptionsSection').removeClass('d-none');
-                $('#correctAnswerTextSection').addClass('d-none');
-                $('#correct_answer_text').removeAttr('required');
-                
-                // If it's a new form and no options exist, add 4 by default
+            if (selectedType === window.QB_QTYPE_MCQ) {
+                $('#section-mcq').removeClass('d-none');
                 if ($('#optionsContainer .option-row').length === 0) {
-                    addOptionRow();
-                    addOptionRow();
-                    addOptionRow();
-                    addOptionRow();
+                    addOptionRow(); addOptionRow(); addOptionRow(); addOptionRow();
                 }
-            } else if (hasOptions == 0) {
-                $('#dynamicOptionsSection').addClass('d-none');
-                $('#correctAnswerTextSection').removeClass('d-none');
+            } 
+            else if (selectedType === window.QB_QTYPE_TRUE_FALSE) {
+                $('#section-true-false').removeClass('d-none');
+            }
+            else if (selectedType === window.QB_QTYPE_FILL_BLANK) {
+                $('#section-fill-blank').removeClass('d-none');
+            }
+            else if (selectedType === window.QB_QTYPE_MATCHING) {
+                $('#section-matching').removeClass('d-none');
+                if ($('#matchingContainer .match-row').length === 0) {
+                    addMatchRow(); addMatchRow();
+                }
+            }
+            else if (selectedType === window.QB_QTYPE_SHORT || selectedType === window.QB_QTYPE_LONG) {
+                $('#section-text-answer').removeClass('d-none');
                 $('#correct_answer_text').attr('required', 'required');
-            } else {
-                $('#dynamicOptionsSection').addClass('d-none');
-                $('#correctAnswerTextSection').addClass('d-none');
-                $('#correct_answer_text').removeAttr('required');
             }
         });
 
@@ -144,6 +152,24 @@
         $(document).on('click', '.removeOptionBtn', function () {
             $(this).closest('.option-row').remove();
             reindexOptions();
+        });
+        
+        $(document).on('click', '.addBlankBtn', function () {
+            addBlankRow();
+        });
+        
+        $(document).on('click', '.removeBlankBtn', function () {
+            $(this).closest('.blank-row').remove();
+            reindexBlanks();
+        });
+
+        $('#addMatchBtn').on('click', function () {
+            addMatchRow();
+        });
+
+        $(document).on('click', '.removeMatchBtn', function () {
+            $(this).closest('.match-row').remove();
+            reindexMatches();
         });
 
         function addOptionRow() {
@@ -160,6 +186,34 @@
             optionCount++;
             reindexOptions();
         }
+        
+        function addBlankRow() {
+            var html = `
+                <div class="col-md-12 blank-row mt-10">
+                    <div class="d-flex align-items-center g-10">
+                        <span class="fw-500 blank-number"></span>
+                        <input type="text" name="blanks[]" class="form-control zForm-control flex-grow-1" placeholder="Answer for [blank]" required>
+                        <button type="button" class="btn btn-sm btn-danger removeBlankBtn"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            $('#blanksContainer').append(html);
+            reindexBlanks();
+        }
+
+        function addMatchRow() {
+            var html = `
+                <div class="col-md-12 match-row">
+                    <div class="d-flex align-items-center g-10">
+                        <input type="text" name="match_left[]" class="form-control zForm-control flex-grow-1" placeholder="Left side text" required>
+                        <input type="text" name="match_right[]" class="form-control zForm-control flex-grow-1" placeholder="Right side text (Correct match)" required>
+                        <button type="button" class="btn btn-sm btn-danger removeMatchBtn"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            $('#matchingContainer').append(html);
+            reindexMatches();
+        }
 
         function reindexOptions() {
             $('#optionsContainer .option-row').each(function(index) {
@@ -168,6 +222,18 @@
             });
             optionCount = $('#optionsContainer .option-row').length;
         }
+
+        function reindexBlanks() {
+            $('#blanksContainer .blank-row').each(function(index) {
+                $(this).find('.blank-number').text((index + 1) + '.');
+                $(this).find('input[type="text"]').attr('name', 'blanks[' + index + ']');
+            });
+        }
+        
+        function reindexMatches() {
+            // Nothing to strictly reindex if we just use arrays for matches
+        }
+
 
     });
 

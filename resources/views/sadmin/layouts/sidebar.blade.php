@@ -133,15 +133,7 @@
                         <span class="">{{ __('Topics') }}</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('super-admin.question-bank.question-types.index') }}"
-                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.question-types.*') ? 'active' : '' }}">
-                        <div class="d-flex">
-                            <i class="fa-solid fa-cubes text-para-text"></i>
-                        </div>
-                        <span class="">{{ __('Question Types') }}</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="{{ route('super-admin.question-bank.questions.index') }}"
                         class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.questions.*') ? 'active' : '' }}">

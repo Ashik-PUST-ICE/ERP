@@ -76,7 +76,7 @@ class QuestionController extends Controller
     {
         $data['title'] = __('Add New Question');
         $data['classes'] = AcademicClass::where('status', 1)->orderBy('order')->get();
-        $data['questionTypes'] = QuestionType::all();
+        $data['questionTypes'] = getQuestionTypes();
         return view('sadmin.question_bank.questions.create', $data);
     }
 
@@ -87,16 +87,17 @@ class QuestionController extends Controller
             'subject_id' => 'required|exists:subjects,id',
             'chapter_id' => 'nullable|exists:chapters,id',
             'topic_id' => 'nullable|exists:topics,id',
-            'question_type_id' => 'required|exists:question_types,id',
+            'question_type_id' => 'required|integer',
             'question_text' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'correct_answer' => 'nullable|string',
             'explanation' => 'nullable|string',
             'marks' => 'required|numeric',
-            'difficulty' => 'required|in:1,2,3',
-            'board' => 'nullable|string|max:255',
+            'difficulty' => 'required|in:' . QB_DIFFICULTY_EASY . ',' . QB_DIFFICULTY_MEDIUM . ',' . QB_DIFFICULTY_HARD,
+            'board_id' => 'nullable|exists:education_boards,id',
+            'stem_id' => 'nullable|exists:question_stems,id',
             'year' => 'nullable|integer',
-            'status' => 'required|in:1,2',
+            'status' => 'required|in:' . QB_QUESTION_STATUS_DRAFT . ',' . QB_QUESTION_STATUS_PUBLISHED . ',' . QB_QUESTION_STATUS_ARCHIVED,
             'source' => 'nullable|string|max:255',
         ]);
 
@@ -109,11 +110,40 @@ class QuestionController extends Controller
             $question->topic_id = $request->topic_id;
             $question->question_type_id = $request->question_type_id;
             $question->question_text = $request->question_text;
-            $question->correct_answer = $request->correct_answer;
+            // Determine correct_answer and options_json based on type
+            $selectedType = (int) $request->question_type_id;
+            $correctAnswer = null;
+            $optionsJson = null;
+
+            if ($selectedType === QB_QTYPE_MCQ) {
+                // Handled via QuestionOption table
+            } elseif ($selectedType === QB_QTYPE_TRUE_FALSE) {
+                $correctAnswer = $request->tf_answer;
+            } elseif ($selectedType === QB_QTYPE_FILL_BLANK) {
+                if ($request->has('blanks') && is_array($request->blanks)) {
+                    $optionsJson = json_encode(['blanks' => $request->blanks]);
+                }
+            } elseif ($selectedType === QB_QTYPE_MATCHING) {
+                if ($request->has('match_left') && $request->has('match_right')) {
+                    $matches = [];
+                    foreach ($request->match_left as $idx => $left) {
+                        if (!empty($left) && !empty($request->match_right[$idx])) {
+                            $matches[] = ['left' => $left, 'right' => $request->match_right[$idx]];
+                        }
+                    }
+                    $optionsJson = json_encode(['matches' => $matches]);
+                }
+            } elseif ($selectedType === QB_QTYPE_SHORT || $selectedType === QB_QTYPE_LONG) {
+                $correctAnswer = $request->correct_answer;
+            }
+
+            $question->correct_answer = $correctAnswer;
+            $question->options_json = $optionsJson;
             $question->explanation = $request->explanation;
             $question->marks = $request->marks;
             $question->difficulty = $request->difficulty;
-            $question->board = $request->board;
+            $question->board_id = $request->board_id;
+            $question->stem_id = $request->stem_id;
             $question->year = $request->year;
             $question->status = $request->status;
             $question->source = $request->source;
@@ -160,7 +190,7 @@ class QuestionController extends Controller
         $data['subjects'] = Subject::where('class_id', $data['question']->class_id)->where('status', 1)->orderBy('order')->get();
         $data['chapters'] = Chapter::where('subject_id', $data['question']->subject_id)->where('status', 1)->orderBy('order')->get();
         $data['topics'] = Topic::where('chapter_id', $data['question']->chapter_id)->where('status', 1)->orderBy('order')->get();
-        $data['questionTypes'] = QuestionType::all();
+        $data['questionTypes'] = getQuestionTypes();
         return view('sadmin.question_bank.questions.edit', $data);
     }
 
@@ -171,16 +201,17 @@ class QuestionController extends Controller
             'subject_id' => 'required|exists:subjects,id',
             'chapter_id' => 'nullable|exists:chapters,id',
             'topic_id' => 'nullable|exists:topics,id',
-            'question_type_id' => 'required|exists:question_types,id',
+            'question_type_id' => 'required|integer',
             'question_text' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'correct_answer' => 'nullable|string',
             'explanation' => 'nullable|string',
             'marks' => 'required|numeric',
-            'difficulty' => 'required|in:1,2,3',
-            'board' => 'nullable|string|max:255',
+            'difficulty' => 'required|in:' . QB_DIFFICULTY_EASY . ',' . QB_DIFFICULTY_MEDIUM . ',' . QB_DIFFICULTY_HARD,
+            'board_id' => 'nullable|exists:education_boards,id',
+            'stem_id' => 'nullable|exists:question_stems,id',
             'year' => 'nullable|integer',
-            'status' => 'required|in:1,2',
+            'status' => 'required|in:' . QB_QUESTION_STATUS_DRAFT . ',' . QB_QUESTION_STATUS_PUBLISHED . ',' . QB_QUESTION_STATUS_ARCHIVED,
             'source' => 'nullable|string|max:255',
         ]);
 
@@ -191,13 +222,41 @@ class QuestionController extends Controller
             $question->subject_id = $request->subject_id;
             $question->chapter_id = $request->chapter_id;
             $question->topic_id = $request->topic_id;
-            $question->question_type_id = $request->question_type_id;
+            $selectedType = (int) $request->question_type_id;
+            $correctAnswer = null;
+            $optionsJson = null;
+
+            if ($selectedType === QB_QTYPE_MCQ) {
+                // Options handled below
+            } elseif ($selectedType === QB_QTYPE_TRUE_FALSE) {
+                $correctAnswer = $request->tf_answer;
+            } elseif ($selectedType === QB_QTYPE_FILL_BLANK) {
+                if ($request->has('blanks') && is_array($request->blanks)) {
+                    $optionsJson = json_encode(['blanks' => $request->blanks]);
+                }
+            } elseif ($selectedType === QB_QTYPE_MATCHING) {
+                if ($request->has('match_left') && $request->has('match_right')) {
+                    $matches = [];
+                    foreach ($request->match_left as $idx => $left) {
+                        if (!empty($left) && !empty($request->match_right[$idx])) {
+                            $matches[] = ['left' => $left, 'right' => $request->match_right[$idx]];
+                        }
+                    }
+                    $optionsJson = json_encode(['matches' => $matches]);
+                }
+            } elseif ($selectedType === QB_QTYPE_SHORT || $selectedType === QB_QTYPE_LONG) {
+                $correctAnswer = $request->correct_answer;
+            }
+
+            $question->question_type_id = $selectedType;
             $question->question_text = $request->question_text;
-            $question->correct_answer = $request->correct_answer;
+            $question->correct_answer = $correctAnswer;
+            $question->options_json = $optionsJson;
             $question->explanation = $request->explanation;
             $question->marks = $request->marks;
             $question->difficulty = $request->difficulty;
-            $question->board = $request->board;
+            $question->board_id = $request->board_id;
+            $question->stem_id = $request->stem_id;
             $question->year = $request->year;
             $question->status = $request->status;
             $question->source = $request->source;
@@ -230,8 +289,9 @@ class QuestionController extends Controller
                 }
             } else {
                 // If the type changed to something without options, clear existing options
-                $qType = QuestionType::find($request->question_type_id);
-                if ($qType && $qType->has_options == 0) {
+                $qTypes = getQuestionTypes();
+                $qType = $qTypes[$request->question_type_id] ?? null;
+                if ($qType && $qType['has_options'] == 0) {
                     QuestionOption::where('question_id', $question->id)->delete();
                 }
             }
@@ -275,7 +335,8 @@ class QuestionController extends Controller
 
     public function getQuestionTypeInfo(Request $request)
     {
-        $type = QuestionType::find($request->type_id);
+        $types = getQuestionTypes();
+        $type = $types[$request->type_id] ?? null;
         return response()->json(['success' => true, 'data' => $type]);
     }
 }

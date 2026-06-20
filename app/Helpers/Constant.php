@@ -195,3 +195,28 @@ const RULES_MAX_TEACHERS      = 'max_teachers';
 const RULES_MAX_QUESTION_SETS = 'max_question_sets';
 const RULES_MAX_CLASSES       = 'max_classes';
 const PACKAGE_CLASS_LIMITS    = [6, 7, 8, 9, 10,11,12];
+
+// ─── Question Bank Constants ──────────────────────────────────────────────────
+const QB_STATUS_ACTIVE = 1;
+const QB_STATUS_INACTIVE = 2;
+
+const QB_DIFFICULTY_EASY = 1;
+const QB_DIFFICULTY_MEDIUM = 2;
+const QB_DIFFICULTY_HARD = 3;
+
+const QB_QUESTION_STATUS_DRAFT = 1;
+const QB_QUESTION_STATUS_PUBLISHED = 2;
+const QB_QUESTION_STATUS_ARCHIVED = 3;
+
+const QB_SOURCE_SUPER_ADMIN = 1;
+const QB_SOURCE_SUGGESTION = 2;
+const QB_SOURCE_TEXTBOOK = 3;
+const QB_SOURCE_QUESTION_PAPER = 4;
+
+const QB_QTYPE_MCQ = 1;
+const QB_QTYPE_TRUE_FALSE = 2;
+const QB_QTYPE_FILL_BLANK = 3;
+const QB_QTYPE_SHORT = 4;
+const QB_QTYPE_LONG = 5;
+const QB_QTYPE_MATCHING = 6;
+
