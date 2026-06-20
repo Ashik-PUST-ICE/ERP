@@ -177,7 +177,7 @@
                 <div class="col-md-12 option-row">
                     <div class="d-flex align-items-center g-10">
                         <input type="radio" name="is_correct_option" value="${optionCount}" class="form-check-input mt-0" style="width: 20px; height: 20px;" title="Mark as correct answer">
-                        <input type="text" name="options[${optionCount}]" class="form-control zForm-control flex-grow-1" placeholder="Option text" required>
+                        <input type="text" name="options[${optionCount}]" class="form-control zForm-control flex-grow-1" placeholder="Option text">
                         <button type="button" class="btn btn-sm btn-danger removeOptionBtn"><i class="fa fa-trash"></i></button>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                 <div class="col-md-12 blank-row mt-10">
                     <div class="d-flex align-items-center g-10">
                         <span class="fw-500 blank-number"></span>
-                        <input type="text" name="blanks[]" class="form-control zForm-control flex-grow-1" placeholder="Answer for [blank]" required>
+                        <input type="text" name="blanks[]" class="form-control zForm-control flex-grow-1" placeholder="Answer for [blank]">
                         <button type="button" class="btn btn-sm btn-danger removeBlankBtn"><i class="fa fa-trash"></i></button>
                     </div>
                 </div>
@@ -205,8 +205,8 @@
             var html = `
                 <div class="col-md-12 match-row">
                     <div class="d-flex align-items-center g-10">
-                        <input type="text" name="match_left[]" class="form-control zForm-control flex-grow-1" placeholder="Left side text" required>
-                        <input type="text" name="match_right[]" class="form-control zForm-control flex-grow-1" placeholder="Right side text (Correct match)" required>
+                        <input type="text" name="match_left[]" class="form-control zForm-control flex-grow-1" placeholder="Left side text">
+                        <input type="text" name="match_right[]" class="form-control zForm-control flex-grow-1" placeholder="Right side text (Correct match)">
                         <button type="button" class="btn btn-sm btn-danger removeMatchBtn"><i class="fa fa-trash"></i></button>
                     </div>
                 </div>
@@ -234,6 +234,56 @@
             // Nothing to strictly reindex if we just use arrays for matches
         }
 
+        // --- 3. Form Submit Validation ---
+        $('form').on('submit', function (e) {
+            var selectedType = parseInt($('#question_type_id').val());
+            if (!selectedType) return; // Let native required handle it
+
+            if (selectedType === window.QB_QTYPE_MCQ) {
+                var hasEmpty = false;
+                $('#optionsContainer .option-row input[type="text"]').each(function () {
+                    if (!$(this).val().trim()) { hasEmpty = true; }
+                });
+                if (hasEmpty) {
+                    e.preventDefault();
+                    toastr.error('Please fill in all option texts.');
+                    return false;
+                }
+                if (!$('input[name="is_correct_option"]:checked').length) {
+                    e.preventDefault();
+                    toastr.error('Please mark one option as the correct answer.');
+                    return false;
+                }
+            } else if (selectedType === window.QB_QTYPE_TRUE_FALSE) {
+                if (!$('input[name="tf_answer"]:checked').length) {
+                    e.preventDefault();
+                    toastr.error('Please select True or False as the correct answer.');
+                    return false;
+                }
+            } else if (selectedType === window.QB_QTYPE_FILL_BLANK) {
+                var hasEmpty = false;
+                $('#blanksContainer .blank-row input[type="text"]').each(function () {
+                    if (!$(this).val().trim()) { hasEmpty = true; }
+                });
+                if (hasEmpty) {
+                    e.preventDefault();
+                    toastr.error('Please fill in all blank answers.');
+                    return false;
+                }
+            } else if (selectedType === window.QB_QTYPE_MATCHING) {
+                if ($('#matchingContainer .match-row').length === 0) {
+                    e.preventDefault();
+                    toastr.error('Please add at least one matching pair.');
+                    return false;
+                }
+            } else if (selectedType === window.QB_QTYPE_SHORT || selectedType === window.QB_QTYPE_LONG) {
+                if (!$('#correct_answer_text').val().trim()) {
+                    e.preventDefault();
+                    toastr.error('Please provide the correct/model answer.');
+                    return false;
+                }
+            }
+        });
 
     });
 

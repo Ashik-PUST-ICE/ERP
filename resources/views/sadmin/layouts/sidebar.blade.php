@@ -135,6 +135,26 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('super-admin.question-bank.education-boards.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.education-boards.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-school text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Education Boards') }}</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('super-admin.question-bank.import.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.import.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-wand-magic-sparkles text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Import & AI Generate') }}</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('super-admin.question-bank.questions.index') }}"
                         class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.questions.*') ? 'active' : '' }}">
                         <div class="d-flex">

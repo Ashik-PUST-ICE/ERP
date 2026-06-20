@@ -23,6 +23,8 @@ use App\Http\Controllers\SuperAdmin\QuestionBank\ChapterController;
 use App\Http\Controllers\SuperAdmin\QuestionBank\TopicController;
 use App\Http\Controllers\SuperAdmin\QuestionBank\QuestionTypeController;
 use App\Http\Controllers\SuperAdmin\QuestionBank\QuestionController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\EducationBoardController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\QuestionImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -252,6 +254,7 @@ Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
         Route::post('subjects', [SubjectController::class, 'store'])->name('subjects.store');
         Route::get('subjects/get-info', [SubjectController::class, 'getInfo'])->name('subjects.get-info');
         Route::post('subjects/update/{id}', [SubjectController::class, 'update'])->name('subjects.update');
+        Route::post('subjects/delete/{id}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
         Route::get('chapters', [ChapterController::class, 'index'])->name('chapters.index');
         Route::post('chapters', [ChapterController::class, 'store'])->name('chapters.store');
         Route::get('chapters/get-info', [ChapterController::class, 'getInfo'])->name('chapters.get-info');
@@ -282,4 +285,19 @@ Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
         Route::get('questions/api/chapters', [QuestionController::class, 'getChaptersBySubject'])->name('questions.api.chapters');
         Route::get('questions/api/topics', [QuestionController::class, 'getTopicsByChapter'])->name('questions.api.topics');
         Route::get('questions/api/question-type', [QuestionController::class, 'getQuestionTypeInfo'])->name('questions.api.question-type');
+        // Education Boards
+        Route::get('education-boards', [EducationBoardController::class, 'index'])->name('education-boards.index');
+        Route::post('education-boards', [EducationBoardController::class, 'store'])->name('education-boards.store');
+        Route::get('education-boards/get-info/{id}', [EducationBoardController::class, 'edit'])->name('education-boards.edit');
+        Route::post('education-boards/update/{id}', [EducationBoardController::class, 'update'])->name('education-boards.update');
+        Route::post('education-boards/delete/{id}', [EducationBoardController::class, 'destroy'])->name('education-boards.destroy');
+
+        // Import & AI Generation
+        Route::get('import', [QuestionImportController::class, 'index'])->name('import.index');
+        Route::get('import/template', [QuestionImportController::class, 'downloadTemplate'])->name('import.template');
+        Route::post('import/excel', [QuestionImportController::class, 'importExcel'])->name('import.excel');
+        Route::post('import/book/upload', [QuestionImportController::class, 'uploadBook'])->name('import.book.upload');
+        Route::post('import/book/delete/{id}', [QuestionImportController::class, 'deleteBook'])->name('import.book.delete');
+        Route::post('import/ai/generate', [QuestionImportController::class, 'generateFromBook'])->name('import.ai.generate');
+        Route::post('import/ai/save', [QuestionImportController::class, 'saveGenerated'])->name('import.ai.save');
     });
