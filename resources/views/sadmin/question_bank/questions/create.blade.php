@@ -178,7 +178,12 @@
 
                             <div class="col-md-4">
                                 <label class="zForm-label">{{ __('Board (Optional)') }}</label>
-                                <input type="text" name="board" class="form-control zForm-control" placeholder="e.g. Dhaka Board">
+                                <select name="board_id" class="sf-select-without-search form-control">
+                                    <option value="">{{ __('Select Board') }}</option>
+                                    @foreach($boards as $board)
+                                        <option value="{{ $board->id }}">{{ $board->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col-md-4">
@@ -213,7 +218,7 @@
 @endsection
 
 @push('script')
-    <script src="{{ asset('sadmin/custom/js/question_form.js') }}?ver={{ env('VERSION', 0) }}"></script>
+    <script src="{{ asset('sadmin/custom/js/question_form.js') }}?ver=1.1"></script>
     <script>
         window.QB_QTYPE_MCQ = {{ QB_QTYPE_MCQ }};
         window.QB_QTYPE_TRUE_FALSE = {{ QB_QTYPE_TRUE_FALSE }};

@@ -279,6 +279,7 @@ Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
         Route::get('questions/edit/{id}', [QuestionController::class, 'edit'])->name('questions.edit');
         Route::post('questions/update/{id}', [QuestionController::class, 'update'])->name('questions.update');
         Route::post('questions/delete/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+        Route::get('questions/preview/{id}', [QuestionController::class, 'preview'])->name('questions.preview');
         
         // API Endpoints for Questions
         Route::get('questions/api/subjects', [QuestionController::class, 'getSubjectsByClass'])->name('questions.api.subjects');

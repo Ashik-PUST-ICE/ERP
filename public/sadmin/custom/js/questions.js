@@ -49,6 +49,27 @@
             $('#searchByQuestion').on('keyup', function () {
                 table.search(this.value).draw();
             });
+
+            // Preview Modal
+            $(document).on('click', '.view-preview-btn', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var url = $('#questionsPreviewRoute').val() + '/' + id;
+                
+                $('#questionPreviewModalContent').html('<div class="p-20 text-center"><i class="fa fa-spinner fa-spin fa-2x text-main-color"></i></div>');
+                $('#questionPreviewModal').modal('show');
+                
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    success: function (response) {
+                        $('#questionPreviewModalContent').html(response);
+                    },
+                    error: function () {
+                        $('#questionPreviewModalContent').html('<div class="p-20 text-center text-danger">Failed to load preview.</div>');
+                    }
+                });
+            });
         }
     }
 

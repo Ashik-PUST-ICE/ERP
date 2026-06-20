@@ -37,7 +37,8 @@ class QuestionController extends Controller
                     return $item->questionType ? $item->questionType->name : 'N/A';
                 })
                 ->addColumn('question_preview', function ($item) {
-                    return strip_tags(substr($item->question_text, 0, 50)) . '...';
+                    $text = strip_tags(substr($item->question_text, 0, 50)) . '...';
+                    return '<a href="javascript:void(0)" class="text-main-color fw-500 view-preview-btn" data-id="'.$item->id.'">'.$text.'</a>';
                 })
                 ->editColumn('status', function ($item) {
                     if ($item->status == 1) {
@@ -65,7 +66,7 @@ class QuestionController extends Controller
                                </ul>
                             </div>';
                 })
-                ->rawColumns(['status', 'action'])
+                ->rawColumns(['status', 'action', 'question_preview'])
                 ->make(true);
         }
         $data['title'] = __('Manage Questions');
@@ -76,6 +77,7 @@ class QuestionController extends Controller
     {
         $data['title'] = __('Add New Question');
         $data['classes'] = AcademicClass::where('status', 1)->orderBy('order')->get();
+        $data['boards'] = \App\Models\EducationBoard::where('status', 1)->get();
         $data['questionTypes'] = getQuestionTypes();
         return view('sadmin.question_bank.questions.create', $data);
     }
@@ -187,6 +189,7 @@ class QuestionController extends Controller
         $data['title'] = __('Edit Question');
         $data['question'] = Question::with('options')->findOrFail($id);
         $data['classes'] = AcademicClass::where('status', 1)->orderBy('order')->get();
+        $data['boards'] = \App\Models\EducationBoard::where('status', 1)->get();
         $data['subjects'] = Subject::where('class_id', $data['question']->class_id)->where('status', 1)->orderBy('order')->get();
         $data['chapters'] = Chapter::where('subject_id', $data['question']->subject_id)->where('status', 1)->orderBy('order')->get();
         $data['topics'] = Topic::where('chapter_id', $data['question']->chapter_id)->where('status', 1)->orderBy('order')->get();
@@ -307,11 +310,15 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         $question = Question::findOrFail($id);
-        // Automatically deletes options due to DB cascade or we can manually delete
-        QuestionOption::where('question_id', $question->id)->delete();
+        $question->options()->delete();
         $question->delete();
-
         return $this->success([], __('Question Deleted Successfully'));
+    }
+
+    public function preview($id)
+    {
+        $question = Question::with('options')->findOrFail($id);
+        return view('sadmin.question_bank.questions.preview_modal', compact('question'))->render();
     }
 
     // --- API Endpoints for Cascading Dropdowns ---

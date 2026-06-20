@@ -52,9 +52,19 @@
         </div>
     </div>
 
+    <!-- Preview Modal -->
+    <div class="modal fade" id="questionPreviewModal" tabindex="-1" aria-labelledby="questionPreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" id="questionPreviewModalContent">
+                <!-- Content loaded via AJAX -->
+            </div>
+        </div>
+    </div>
+
     <input type="hidden" id="questionsDataRoute" value="{{ route('super-admin.question-bank.questions.index') }}">
+    <input type="hidden" id="questionsPreviewRoute" value="{{ route('super-admin.question-bank.questions.preview', '') }}">
 @endsection
 
 @push('script')
-    <script src="{{ asset('sadmin/custom/js/questions.js') }}?ver={{ env('VERSION', 0) }}"></script>
+    <script src="{{ asset('sadmin/custom/js/questions.js') }}?ver=1.2"></script>
 @endpush

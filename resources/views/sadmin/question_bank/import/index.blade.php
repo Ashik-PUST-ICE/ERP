@@ -282,15 +282,25 @@ $(document).ready(function () {
         $('#' + $(this).data('tab')).removeClass('d-none').addClass('active');
     });
 
+    function refreshSelectPicker(selector) {
+        if ($(selector).hasClass('select2-hidden-accessible')) {
+            $(selector).trigger('change');
+        } else if ($.fn.niceSelect) {
+            $(selector).niceSelect('update');
+        }
+    }
+
     // Cascade dropdowns for AI generator
     function loadSubjects(classId, subjectSelect) {
         $(subjectSelect).html('<option value="">Select Subject</option>');
+        refreshSelectPicker(subjectSelect);
         if (!classId) return;
         $.get($('#apiGetSubjectsUrl').val(), { class_id: classId }, function (res) {
             if (res.success && res.data) {
                 $.each(res.data, function (k, v) {
                     $(subjectSelect).append('<option value="' + v.id + '">' + v.name + '</option>');
                 });
+                refreshSelectPicker(subjectSelect);
             }
         });
     }
@@ -298,24 +308,29 @@ $(document).ready(function () {
     function loadChapters(subjectId) {
         $('#genChapterId').html('<option value="">Select Chapter</option>');
         $('#genTopicId').html('<option value="">Select Topic</option>');
+        refreshSelectPicker('#genChapterId');
+        refreshSelectPicker('#genTopicId');
         if (!subjectId) return;
         $.get($('#apiGetChaptersUrl').val(), { subject_id: subjectId }, function (res) {
             if (res.success && res.data) {
                 $.each(res.data, function (k, v) {
                     $('#genChapterId').append('<option value="' + v.id + '">' + v.name + '</option>');
                 });
+                refreshSelectPicker('#genChapterId');
             }
         });
     }
 
     function loadTopics(chapterId) {
         $('#genTopicId').html('<option value="">Select Topic</option>');
+        refreshSelectPicker('#genTopicId');
         if (!chapterId) return;
         $.get($('#apiGetTopicsUrl').val(), { chapter_id: chapterId }, function (res) {
             if (res.success && res.data) {
                 $.each(res.data, function (k, v) {
                     $('#genTopicId').append('<option value="' + v.id + '">' + v.name + '</option>');
                 });
+                refreshSelectPicker('#genTopicId');
             }
         });
     }
