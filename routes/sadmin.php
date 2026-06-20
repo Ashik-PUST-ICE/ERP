@@ -17,6 +17,12 @@ use App\Http\Controllers\SuperAdmin\FrontendController;
 use App\Http\Controllers\SuperAdmin\VersionUpdateController;
 use App\Models\Language;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SuperAdmin\QuestionBank\AcademicClassController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\SubjectController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\ChapterController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\TopicController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\QuestionTypeController;
+use App\Http\Controllers\SuperAdmin\QuestionBank\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -235,3 +241,45 @@ Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
     Route::get('version-update-execute', [VersionUpdateController::class, 'versionUpdateExecute'])->name('file-version-update-execute');
     Route::get('version-delete', [VersionUpdateController::class, 'versionFileUpdateDelete'])->name('file-version-delete');
 
+    // Question Bank System
+    Route::group(['prefix' => 'question-bank', 'as' => 'question-bank.'], function () {
+        Route::get('classes', [AcademicClassController::class, 'index'])->name('classes.index');
+        Route::post('classes', [AcademicClassController::class, 'store'])->name('classes.store');
+        Route::get('classes/get-info', [AcademicClassController::class, 'getInfo'])->name('classes.get-info');
+        Route::post('classes/update/{id}', [AcademicClassController::class, 'update'])->name('classes.update');
+        Route::post('classes/delete/{id}', [AcademicClassController::class, 'destroy'])->name('classes.destroy');
+        Route::get('subjects', [SubjectController::class, 'index'])->name('subjects.index');
+        Route::post('subjects', [SubjectController::class, 'store'])->name('subjects.store');
+        Route::get('subjects/get-info', [SubjectController::class, 'getInfo'])->name('subjects.get-info');
+        Route::post('subjects/update/{id}', [SubjectController::class, 'update'])->name('subjects.update');
+        Route::get('chapters', [ChapterController::class, 'index'])->name('chapters.index');
+        Route::post('chapters', [ChapterController::class, 'store'])->name('chapters.store');
+        Route::get('chapters/get-info', [ChapterController::class, 'getInfo'])->name('chapters.get-info');
+        Route::post('chapters/update/{id}', [ChapterController::class, 'update'])->name('chapters.update');
+        Route::post('chapters/delete/{id}', [ChapterController::class, 'destroy'])->name('chapters.destroy');
+        
+        Route::get('topics', [TopicController::class, 'index'])->name('topics.index');
+        Route::post('topics', [TopicController::class, 'store'])->name('topics.store');
+        Route::get('topics/get-info', [TopicController::class, 'getInfo'])->name('topics.get-info');
+        Route::post('topics/update/{id}', [TopicController::class, 'update'])->name('topics.update');
+        Route::post('topics/delete/{id}', [TopicController::class, 'destroy'])->name('topics.destroy');
+        Route::get('question-types', [QuestionTypeController::class, 'index'])->name('question-types.index');
+        Route::post('question-types', [QuestionTypeController::class, 'store'])->name('question-types.store');
+        Route::get('question-types/get-info', [QuestionTypeController::class, 'getInfo'])->name('question-types.get-info');
+        Route::post('question-types/update/{id}', [QuestionTypeController::class, 'update'])->name('question-types.update');
+        Route::post('question-types/delete/{id}', [QuestionTypeController::class, 'destroy'])->name('question-types.destroy');
+        
+        // Question Routes
+        Route::get('questions', [QuestionController::class, 'index'])->name('questions.index');
+        Route::get('questions/create', [QuestionController::class, 'create'])->name('questions.create');
+        Route::post('questions/store', [QuestionController::class, 'store'])->name('questions.store');
+        Route::get('questions/edit/{id}', [QuestionController::class, 'edit'])->name('questions.edit');
+        Route::post('questions/update/{id}', [QuestionController::class, 'update'])->name('questions.update');
+        Route::post('questions/delete/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+        
+        // API Endpoints for Questions
+        Route::get('questions/api/subjects', [QuestionController::class, 'getSubjectsByClass'])->name('questions.api.subjects');
+        Route::get('questions/api/chapters', [QuestionController::class, 'getChaptersBySubject'])->name('questions.api.chapters');
+        Route::get('questions/api/topics', [QuestionController::class, 'getTopicsByChapter'])->name('questions.api.topics');
+        Route::get('questions/api/question-type', [QuestionController::class, 'getQuestionTypeInfo'])->name('questions.api.question-type');
+    });

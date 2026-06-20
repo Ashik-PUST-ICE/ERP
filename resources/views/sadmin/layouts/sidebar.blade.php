@@ -93,6 +93,65 @@
                     </a>
                 </li>
             
+                {{-- ── Question Bank ─────────────────────────────────────────────── --}}
+                <li class="zSidebar-label">
+                    <span>{{ __('Question Bank') }}</span>
+                </li>
+                <li>
+                    <a href="{{ route('super-admin.question-bank.classes.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.classes.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-school text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Classes') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('super-admin.question-bank.subjects.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.subjects.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-book text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Subjects') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('super-admin.question-bank.chapters.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.chapters.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-bookmark text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Chapters') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('super-admin.question-bank.topics.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.topics.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-list text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Topics') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('super-admin.question-bank.question-types.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.question-types.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-cubes text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Question Types') }}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('super-admin.question-bank.questions.index') }}"
+                        class="d-flex align-items-center cg-21 {{ request()->routeIs('super-admin.question-bank.questions.*') ? 'active' : '' }}">
+                        <div class="d-flex">
+                            <i class="fa-solid fa-file-circle-question text-para-text"></i>
+                        </div>
+                        <span class="">{{ __('Master Question Bank') }}</span>
+                    </a>
+                </li>
+            
                 {{-- ── Management ─────────────────────────────────────────────── --}}
                 <li class="zSidebar-label">
                     <span>{{ __('Management') }}</span>
