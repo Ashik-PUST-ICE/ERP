@@ -2,9 +2,21 @@
 @section('content')
 @push('title') {{ $title }} @endpush
 
-<div data-aos="fade-up" data-aos-duration="1000" class="p-sm-40 p-15">
-    <h4 class="fs-18 fw-600 lh-18 text-textBlack pb-16">{{ __($title) }}</h4>
-
+<div data-aos="fade-up" data-aos-duration="1000" class="p-sm-30 p-15">
+    <h4 class="fs-18 fw-500 lh-20 text-textBlack pb-16">{{ __('Frontend Settings') }}</h4>
+    <div class="row rg-20">
+        <!-- Sidebar -->
+        <div class="col-xl-3">
+            <div class="bg-white p-sm-25 p-15 bd-one bd-c-stroke bd-ra-8">
+                @include('sadmin.frontend.partials.sidebar')
+            </div>
+        </div>
+        <!-- Content -->
+        <div class="col-xl-9">
+            <div class="bg-white bd-one bd-c-stroke bd-ra-8 p-sm-25 p-15">
+                <div class="pb-16 mb-20 border-bottom">
+                    <h4 class="fs-18 fw-600 lh-18 text-textBlack">{{ __($title) }}</h4>
+                </div>
     <form id="policiesForm">
         @csrf
 
@@ -47,6 +59,9 @@
             </button>
         </div>
     </form>
+        </div>{{-- col-xl-9 inner card --}}
+        </div>{{-- col-xl-9 --}}
+    </div>{{-- row --}}
 </div>
 
 @push('script')

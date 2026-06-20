@@ -11,16 +11,26 @@
     $hasImage       = in_array($type, ['feature', 'service', 'core_feature', 'choose_us', 'testimonial']);
 @endphp
 
-<div data-aos="fade-up" data-aos-duration="1000" class="p-sm-40 p-15">
-    <div class="d-flex align-items-center justify-content-between pb-16">
-        <h4 class="fs-18 fw-600 lh-18 text-textBlack">{{ __($title) }}</h4>
-        <button class="py-12 pr-15 pl-10 bd-one bd-c-main-color bg-main-color bd-ra-4 fs-14 fw-500 lh-14 text-white"
-                type="button" data-bs-toggle="modal" data-bs-target="#addModal">
-            <i class="fa fa-plus"></i> {{ __('Add New') }}
-        </button>
-    </div>
-
-    <div class="row rg-16">
+<div data-aos="fade-up" data-aos-duration="1000" class="p-sm-30 p-15">
+    <h4 class="fs-18 fw-500 lh-20 text-textBlack pb-16">{{ __('Frontend Settings') }}</h4>
+    <div class="row rg-20">
+        <!-- Sidebar -->
+        <div class="col-xl-3">
+            <div class="bg-white p-sm-25 p-15 bd-one bd-c-stroke bd-ra-8">
+                @include('sadmin.frontend.partials.sidebar')
+            </div>
+        </div>
+        <!-- Content -->
+        <div class="col-xl-9">
+            <div class="bg-white bd-one bd-c-stroke bd-ra-8 p-sm-25 p-15">
+                <div class="d-flex align-items-center justify-content-between pb-16 mb-20 border-bottom">
+                    <h4 class="fs-18 fw-600 lh-18 text-textBlack mb-0">{{ __($title) }}</h4>
+                    <button class="py-10 pr-15 pl-10 bd-one bd-c-main-color bg-main-color bd-ra-4 fs-14 fw-500 lh-14 text-white"
+                            type="button" data-bs-toggle="modal" data-bs-target="#addModal">
+                        <i class="fa fa-plus"></i> {{ __('Add New') }}
+                    </button>
+                </div>
+                <div class="row rg-16">
         @forelse ($items as $item)
         <div class="col-lg-4 col-md-6">
             <div class="bd-one bd-c-stroke bd-ra-8 bg-white p-20 h-100">
@@ -69,7 +79,10 @@
             </div>
         </div>
         @endforelse
-    </div>
+                </div>{{-- row --}}
+            </div>{{-- col-xl-9 inner card --}}
+        </div>{{-- col-xl-9 --}}
+    </div>{{-- row --}}
 </div>
 
 {{-- Add Modal --}}
