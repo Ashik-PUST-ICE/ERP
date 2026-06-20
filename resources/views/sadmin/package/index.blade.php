@@ -46,7 +46,7 @@
                         <div class="text-nowrap">{{ __('Status') }}</div>
                     </th>
                     <th class="desktop">
-                        <div class="text-nowrap">{{ __('Action') }}</div>
+                        <div class="text-nowrap">{{ __('Is Trail') }}</div>
                     </th>
                     <th>
                         <div>{{ __('Action') }}</div>
