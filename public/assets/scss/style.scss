@@ -786,6 +786,82 @@ Version: 1.0
     }
   }
 }
+.package-class-picker {
+  width: 100%;
+
+  .package-class-picker-toggle {
+    min-height: toRem(52);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: toRem(10);
+    border: toRem(1) solid $stroke;
+    border-radius: toRem(4);
+    background-color: $white;
+    padding: toRem(13) toRem(15);
+    text-align: left;
+    @include fontFamily(14, $fw_regular, 22, $para-text);
+
+    &:hover,
+    &:focus {
+      border-color: $main-color;
+      outline: none;
+    }
+
+    i {
+      flex-shrink: 0;
+      color: $para-text;
+      font-size: toRem(12);
+    }
+  }
+
+  .package-class-picker-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .package-class-picker-menu {
+    top: calc(100% + #{toRem(4)}) !important;
+    bottom: auto !important;
+    left: 0 !important;
+    right: auto !important;
+    transform: none !important;
+    width: 100%;
+    max-height: toRem(190);
+    overflow-y: auto;
+    border: toRem(1) solid $stroke;
+    border-radius: toRem(4);
+    background-color: $white;
+    box-shadow: 0 0 toRem(10) rgb(76 76 76 / 12%);
+    padding: toRem(6);
+    z-index: 1060;
+  }
+
+  .package-class-picker-option {
+    min-height: toRem(36);
+    display: flex;
+    align-items: center;
+    gap: toRem(8);
+    border-radius: toRem(4);
+    padding: toRem(8) toRem(10);
+    cursor: pointer;
+    @include fontFamily(14, $fw_regular, 18, $para-text);
+
+    &:hover {
+      background-color: $body-bg;
+      color: $textBlack;
+    }
+
+    input {
+      width: toRem(15);
+      height: toRem(15);
+      accent-color: $main-color;
+      flex-shrink: 0;
+    }
+  }
+}
 .dropdown-selectService {
   .dropdown {
     &-toggle {

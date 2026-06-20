@@ -76,6 +76,16 @@
                                 </h4>
                             </div>
                         </li>
+                        <li>
+                            <div class="d-flex align-items-center cg-10">
+                                <div class="text-title-black">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                                <h4 class="flex-grow-1 fs-18 fw-400 lh-28 text-title-black">
+                                    {{ formatPackageClassLimit($userPackage->max_classes, 'Classes') }}
+                                </h4>
+                            </div>
+                        </li>
                         @foreach (getPackageOtherFields(auth()->id()) ?? [] as $field)
                         <li>
                             <div class="d-flex align-items-center cg-10">

@@ -43,6 +43,8 @@ class PackageRequest extends FormRequest
             'max_questions' => 'nullable|integer|min:0',
             'max_teachers' => 'nullable|integer|min:0',
             'max_question_sets' => 'nullable|integer|min:0',
+            'max_classes' => 'nullable|array',
+            'max_classes.*' => 'integer|in:' . implode(',', \PACKAGE_CLASS_LIMITS),
             'monthly_price' => 'required|numeric|min:0',
             'yearly_price' => 'required|numeric|min:0',
         ];

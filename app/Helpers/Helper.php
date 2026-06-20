@@ -890,6 +890,8 @@ if (!function_exists('userCurrentPackage')) {
             ->where('status', ACTIVE)
             ->where('user_id', $userId)
             ->whereDate('end_date', '>=', now()->toDateTimeString())
+            ->orderByDesc('end_date')
+            ->orderByDesc('id')
             ->first();
     }
 }
@@ -1555,6 +1557,54 @@ if (!function_exists('userNotification')) {
     }
 }
 
+if (!function_exists('getPackageClassLimits')) {
+    function getPackageClassLimits(): array
+    {
+        return PACKAGE_CLASS_LIMITS;
+    }
+}
+
+if (!function_exists('normalizePackageClassLimit')) {
+    function normalizePackageClassLimit($value): ?array
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            $value = is_array($decoded) ? $decoded : [$value];
+        }
+
+        if (!is_array($value)) {
+            $value = [$value];
+        }
+
+        $limits = [];
+        foreach ($value as $item) {
+            $item = (int) $item;
+            if (in_array($item, PACKAGE_CLASS_LIMITS, true)) {
+                $limits[$item] = $item;
+            }
+        }
+
+        $limits = array_values($limits);
+        return count($limits) ? $limits : null;
+    }
+}
+
+if (!function_exists('formatPackageClassLimit')) {
+    function formatPackageClassLimit($value, string $label = 'Classes'): string
+    {
+        $limits = normalizePackageClassLimit($value);
+        if (is_null($limits)) {
+            return __('Unlimited') . ' ' . __($label);
+        }
+
+        return implode(', ', array_map(fn ($limit) => number_format($limit), $limits)) . ' ' . __($label);
+    }
+}
+
 if (!function_exists('getAdminLimit')) {
     /**
      * Check how many units remain for a given limit type on the admin's active package.
@@ -1564,7 +1614,7 @@ if (!function_exists('getAdminLimit')) {
      *   true                   → no limit / unlimited (-1) or no package check needed
      *   false                  → no active package found — deny access
      *
-     * @param string $type  RULES_MAX_QUESTIONS | RULES_MAX_TEACHERS | RULES_MAX_QUESTION_SETS
+     * @param string $type  RULES_MAX_QUESTIONS | RULES_MAX_TEACHERS | RULES_MAX_QUESTION_SETS | RULES_MAX_CLASSES
      * @param int|null $userId  defaults to auth()->id()
      */
     function getAdminLimit(string $type, ?int $userId = null): int|bool
@@ -1586,6 +1636,7 @@ if (!function_exists('getAdminLimit')) {
             RULES_MAX_QUESTIONS => ['questions', 'max_questions'],
             RULES_MAX_TEACHERS => ['teachers', 'max_teachers'],
             RULES_MAX_QUESTION_SETS => ['question_sets', 'max_question_sets'],
+            RULES_MAX_CLASSES => ['classes', 'max_classes'],
         ];
 
         if (!array_key_exists($type, $limitColumns)) {
@@ -1594,6 +1645,11 @@ if (!function_exists('getAdminLimit')) {
 
         [$table, $column] = $limitColumns[$type];
         $limit = $userPackage->{$column};
+
+        if ($column === 'max_classes') {
+            $limits = normalizePackageClassLimit($limit);
+            $limit = is_null($limits) ? 0 : max($limits);
+        }
 
         if (is_null($limit)) {
             return true;
@@ -1837,6 +1893,7 @@ if (!function_exists('setUserPackage')) {
             'max_questions' => $package->max_questions,
             'max_teachers' => $package->max_teachers,
             'max_question_sets' => $package->max_question_sets,
+            'max_classes' => $package->max_classes,
             'monthly_price' => $package->monthly_price,
             'yearly_price' => $package->yearly_price,
             'order_id' => $orderId,

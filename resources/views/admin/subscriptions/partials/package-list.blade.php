@@ -232,6 +232,18 @@
                                 </p>
                             </div>
                         </li>
+                        <li>
+                            <div class="d-flex align-items-start g-10">
+                                <div
+                                    class="flex-shrink-0 d-flex justify-content-center align-items-center w-15 h-15 rounded-circle bg-main-color mt-4">
+                                    <img src="{{asset('assets/images/icon/features-check-icon.svg')}}"
+                                        alt="{{ $package->name }}" />
+                                </div>
+                                <p class="fs-18 fw-400 lh-22 text-para-text">
+                                    {{ formatPackageClassLimit($package->max_classes, 'Classes') }}
+                                </p>
+                            </div>
+                        </li>
                         @foreach (($package->others ?? []) as $other)
                         <li>
                             <div class="d-flex align-items-start g-10">

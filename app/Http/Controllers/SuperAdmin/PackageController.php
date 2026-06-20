@@ -26,6 +26,7 @@ class PackageController extends Controller
         } else {
             $data['title'] = __('All Packages');
             $data['activePackageIndex'] = 'active';
+            $data['classLimits'] = PACKAGE_CLASS_LIMITS;
             return view('sadmin.package.index', $data);
         }
     }

@@ -10,6 +10,10 @@ class UserPackage extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $casts = [
+        'max_classes' => 'array',
+    ];
+
     protected $fillable = [
         'user_id',
         'package_id',
@@ -17,6 +21,7 @@ class UserPackage extends Model
         'max_questions',
         'max_teachers',
         'max_question_sets',
+        'max_classes',
         'monthly_price',
         'yearly_price',
         'start_date',

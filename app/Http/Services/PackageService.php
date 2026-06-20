@@ -44,6 +44,9 @@ class PackageService
             ->addColumn('yearly_price', function ($package) {
                 return showPrice($package->yearly_price);
             })
+            ->addColumn('classes', function ($package) {
+                return formatPackageClassLimit($package->max_classes, 'Classes');
+            })
             ->addColumn('status', function ($package) {
                 if ($package->status == STATUS_ACTIVE) {
                     return '<div class="zBadge zBadge-done">' . __('Active') . '</div>';
@@ -77,13 +80,18 @@ class PackageService
                            </ul>
                         </div>';
             })
-            ->rawColumns(['name', 'icon', 'status', 'trail', 'action'])
+            ->rawColumns(['name', 'icon', 'status', 'trail', 'classes', 'action'])
             ->make(true);
     }
 
     public function getActiveAll()
     {
         return Package::where('status', ACTIVE)->get();
+    }
+
+    private function normalizeClassLimit($value): ?array
+    {
+        return normalizePackageClassLimit($value);
     }
 
     public function store($request)
@@ -109,6 +117,7 @@ class PackageService
             $package->max_questions = $request->max_questions;
             $package->max_teachers = $request->max_teachers;
             $package->max_question_sets = $request->max_question_sets;
+            $package->max_classes = $this->normalizeClassLimit($request->max_classes);
 
             $package->others = $request->others ?? [];
             $package->status = $request->status ? ACTIVE : DEACTIVATE;
@@ -127,6 +136,7 @@ class PackageService
                 'max_questions' => $package->max_questions,
                 'max_teachers' => $package->max_teachers,
                 'max_question_sets' => $package->max_question_sets,
+                'max_classes' => $package->max_classes,
             ]);
 
             DB::commit();
@@ -277,6 +287,9 @@ class PackageService
             ->addColumn('package_name', function ($userPackage) {
                 return $userPackage->name;
             })
+            ->addColumn('classes', function ($userPackage) {
+                return formatPackageClassLimit($userPackage->max_classes, 'Classes');
+            })
             ->addColumn('gateway', function ($userPackage) {
                 return $userPackage->gatewaysName ?? '—';
             })
@@ -311,7 +324,7 @@ class PackageService
                            </ul>
                         </div>';
             })
-            ->rawColumns(['user_name', 'package_name', 'payment_status', 'start_date', 'end_date', 'status', 'action'])
+            ->rawColumns(['user_name', 'package_name', 'payment_status', 'start_date', 'end_date', 'status', 'classes', 'action'])
             ->make(true);
     }
 
@@ -330,6 +343,7 @@ class PackageService
             'package_name' => $up->name,
             'start_date' => $up->start_date ? Carbon::parse($up->start_date)->format('Y-m-d\TH:i') : '',
             'end_date' => $up->end_date ? Carbon::parse($up->end_date)->format('Y-m-d\TH:i') : '',
+            'max_classes' => $up->max_classes,
             'status' => (int) $up->status,
         ];
     }
@@ -339,6 +353,8 @@ class PackageService
         $validator = Validator::make($request->all(), [
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'max_classes' => 'nullable|array',
+            'max_classes.*' => 'integer|in:' . implode(',', \PACKAGE_CLASS_LIMITS),
             'status' => 'required|in:' . DEACTIVATE . ',' . ACTIVE,
         ]);
         if ($validator->fails()) {
@@ -349,6 +365,7 @@ class PackageService
             $up = UserPackage::findOrFail($id);
             $up->start_date = $request->start_date;
             $up->end_date = $request->end_date;
+            $up->max_classes = $this->normalizeClassLimit($request->max_classes);
             $up->status = (int) $request->status;
             $up->save();
 

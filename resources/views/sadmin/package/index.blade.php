@@ -40,6 +40,9 @@
                         <div class="text-nowrap">{{ __('Yearly Price') }}</div>
                     </th>
                     <th class="desktop">
+                        <div class="text-nowrap">{{ __('Classes') }}</div>
+                    </th>
+                    <th class="desktop">
                         <div class="text-nowrap">{{ __('Status') }}</div>
                     </th>
                     <th class="desktop">
@@ -98,6 +101,26 @@
                                 <label for="max_question_sets" class="zForm-label">{{ __('Max Question Sets') }}</label>
                                 <input type="number" name="max_question_sets" id="max_question_sets" min="0"
                                        placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
+                            </div>
+                            <div>
+                                <label for="max_classes" class="zForm-label">{{ __('Max Classes') }}</label>
+                                <select name="max_classes[]" id="max_classes" class="package-class-source d-none" multiple>
+                                    @if(isset($classLimits) && !empty($classLimits))
+                                        @foreach ($classLimits as $classLimit)
+                                            <option value="{{ $classLimit }}">{{ $classLimit }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="">No options available</option>
+                                    @endif
+                                </select>
+                                <div class="package-class-picker dropdown position-relative" data-select="#max_classes">
+                                    <button type="button" class="package-class-picker-toggle" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside" data-bs-display="static" aria-expanded="false">
+                                        <span class="package-class-picker-text">{{ __('Select classes') }}</span>
+                                        <i class="fa-solid fa-angle-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu package-class-picker-menu"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -233,6 +256,26 @@
                                 <input type="number" name="max_question_sets" id="edit_max_question_sets" min="0"
                                        placeholder="{{ __('Leave blank for unlimited') }}" class="form-control zForm-control mb-8">
                             </div>
+                            <div>
+                                <label for="edit_max_classes" class="zForm-label">{{ __('Max Classes') }}</label>
+                                <select name="max_classes[]" id="edit_max_classes" class="package-class-source d-none" multiple>
+                                    @if(isset($classLimits) && !empty($classLimits))
+                                        @foreach ($classLimits as $classLimit)
+                                            <option value="{{ $classLimit }}">{{ $classLimit }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="">No options available</option>
+                                    @endif
+                                </select>
+                                <div class="package-class-picker dropdown position-relative" data-select="#edit_max_classes">
+                                    <button type="button" class="package-class-picker-toggle" data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside" data-bs-display="static" aria-expanded="false">
+                                        <span class="package-class-picker-text">{{ __('Select classes') }}</span>
+                                        <i class="fa-solid fa-angle-down"></i>
+                                    </button>
+                                    <div class="dropdown-menu package-class-picker-menu"></div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row pb-20">
@@ -340,5 +383,5 @@
     <input type="hidden" id="packageInfoRoute" value="{{ route('super-admin.packages.get.info') }}">
 @endsection
 @push('script')
-    <script src="{{ asset('sadmin/custom/js/package.js') }}"></script>
+    <script src="{{ asset('sadmin/custom/js/package.js') }}?ver={{ env('VERSION', 0) }}"></script>
 @endpush

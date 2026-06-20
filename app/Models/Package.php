@@ -12,6 +12,7 @@ class Package extends Model
 
     protected $casts = [
         'others' => 'array',
+        'max_classes' => 'array',
     ];
 
     protected $fillable = [
@@ -21,6 +22,7 @@ class Package extends Model
         'max_questions',
         'max_teachers',
         'max_question_sets',
+        'max_classes',
         'others',
         'monthly_price',
         'yearly_price',

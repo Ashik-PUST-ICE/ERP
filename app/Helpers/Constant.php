@@ -193,3 +193,5 @@ const AI_LANGUAGE_AUTO = 'auto';
 const RULES_MAX_QUESTIONS     = 'max_questions';
 const RULES_MAX_TEACHERS      = 'max_teachers';
 const RULES_MAX_QUESTION_SETS = 'max_question_sets';
+const RULES_MAX_CLASSES       = 'max_classes';
+const PACKAGE_CLASS_LIMITS    = [6, 7, 8, 9, 10,11,12];

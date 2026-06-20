@@ -33,6 +33,9 @@
                         <div class="text-nowrap">{{ __('Package Name') }}</div>
                     </th>
                     <th class="desktop">
+                        <div class="text-nowrap">{{ __('Classes') }}</div>
+                    </th>
+                    <th class="desktop">
                         <div class="text-nowrap">{{ __('Start Date') }}</div>
                     </th>
                     <th class="desktop">
@@ -130,6 +133,14 @@
                         <input type="datetime-local" name="end_date" id="editUserPackageEnd" class="form-control zForm-control" required>
                     </div>
                     <div class="col-12">
+                        <label class="zForm-label">{{ __('Max Classes') }}</label>
+                        <select name="max_classes[]" id="editUserPackageMaxClasses" class="form-control zForm-control multiple-basic-single" multiple>
+                            @foreach (PACKAGE_CLASS_LIMITS as $classLimit)
+                                <option value="{{ $classLimit }}">{{ $classLimit }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12">
                         <label class="zForm-label">{{ __('Status') }} <span class="text-danger">*</span></label>
                         <select name="status" id="editUserPackageStatus" class="sf-select-without-search form-control zForm-control">
                             <option value="{{ ACTIVE }}">{{ __('Active') }}</option>
@@ -149,5 +160,18 @@
 @endsection
 
 @push('script')
-<script src="{{ asset('sadmin/custom/js/package.js') }}"></script>
+<script src="{{ asset('sadmin/custom/js/package.js') }}?ver={{ env('VERSION', 0) }}"></script>
+<script>
+    $(document).on('shown.bs.modal', '#editUserPackageModal', function () {
+        var select = $('#editUserPackageMaxClasses');
+        if (select.hasClass('select2-hidden-accessible')) {
+            select.select2('destroy');
+        }
+        select.select2({
+            placeholder: '{{ __('Select classes') }}',
+            allowClear: true,
+            dropdownParent: $('#editUserPackageModal')
+        });
+    });
+</script>
 @endpush

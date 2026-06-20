@@ -103,6 +103,7 @@ class DashboardService
                     'max_questions' => $package->max_questions,
                     'max_teachers' => $package->max_teachers,
                     'max_question_sets' => $package->max_question_sets,
+                    'max_classes' => $package->max_classes,
                     'active_users' => (int) ($activeUsersByPackage[$package->id] ?? 0),
                     'paid_orders' => $row ? (int) $row->paid_orders : 0,
                     'paid_revenue' => $row ? (float) $row->total_revenue : 0.0,

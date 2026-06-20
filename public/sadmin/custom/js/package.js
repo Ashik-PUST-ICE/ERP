@@ -17,10 +17,120 @@
         }
     }
 
+    function normalizeSelectValues(values) {
+        if (!values) {
+            return [];
+        }
+        if (typeof values === 'string') {
+            try {
+                values = JSON.parse(values);
+            } catch (e) {
+                values = values.split(',');
+            }
+        }
+        if (!Array.isArray(values)) {
+            values = [values];
+        }
+        return values.map(function (value) {
+            return String(value);
+        });
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, function (char) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[char];
+        });
+    }
+
+    function updatePackageClassPicker(select) {
+        var picker = $('.package-class-picker[data-select="#' + select.attr('id') + '"]');
+        if (!picker.length) {
+            return;
+        }
+
+        var values = normalizeSelectValues(select.val());
+        var labels = [];
+
+        picker.find('.package-class-picker-check').each(function () {
+            var checkbox = $(this);
+            var checked = values.indexOf(String(checkbox.val())) !== -1;
+            checkbox.prop('checked', checked);
+            if (checked) {
+                labels.push(checkbox.data('label'));
+            }
+        });
+
+        picker.find('.package-class-picker-text').text(labels.length ? labels.join(', ') : 'Select classes');
+    }
+
+    function initPackageClassPickers(scope) {
+        $(scope || document).find('.package-class-picker').each(function () {
+            var picker = $(this);
+            var select = $(picker.data('select'));
+            var menu = picker.find('.package-class-picker-menu');
+
+            if (!select.length || picker.data('ready')) {
+                updatePackageClassPicker(select);
+                return;
+            }
+
+            var html = '';
+            select.find('option').each(function () {
+                var option = $(this);
+                if (!option.val()) {
+                    return;
+                }
+                var id = select.attr('id') + '_class_' + option.val();
+                html += `<label class="package-class-picker-option" for="${escapeHtml(id)}">
+                            <input type="checkbox" class="package-class-picker-check" id="${escapeHtml(id)}"
+                                   value="${escapeHtml(option.val())}" data-label="${escapeHtml(option.text())}">
+                            <span>${escapeHtml(option.text())}</span>
+                         </label>`;
+            });
+
+            menu.html(html);
+            picker.data('ready', true);
+            updatePackageClassPicker(select);
+        });
+    }
+
+    $(document).on('change', '.package-class-picker-check', function () {
+        var picker = $(this).closest('.package-class-picker');
+        var select = $(picker.data('select'));
+        var values = picker.find('.package-class-picker-check:checked').map(function () {
+            return String($(this).val());
+        }).get();
+
+        select.val(values).trigger('change');
+    });
+
+    $(document).on('change', '.package-class-source', function () {
+        updatePackageClassPicker($(this));
+    });
+
+    $(document).on('reset', 'form', function () {
+        var form = $(this);
+        setTimeout(function () {
+            form.find('.package-class-source').each(function () {
+                updatePackageClassPicker($(this));
+            });
+        }, 0);
+    });
+
+    initPackageClassPickers(document);
+
     $(document).on('click', '#add', function () {
         var selector = $('#addModal');
         selector.find('.otherFields').html('');
         selector.find('input[name=sync_stripe]').prop('checked', false);
+        initPackageClassPickers(selector);
+        selector.find('select[name="max_classes[]"]').val([]).trigger('change');
         showBsModal('#addModal');
     });
 
@@ -63,6 +173,8 @@
         selector.find('input[name=max_questions]').val(response.data.max_questions);
         selector.find('input[name=max_teachers]').val(response.data.max_teachers);
         selector.find('input[name=max_question_sets]').val(response.data.max_question_sets);
+        initPackageClassPickers(selector);
+        selector.find('#edit_max_classes').val(normalizeSelectValues(response.data.max_classes)).trigger('change');
 
         // others — API may send array (Package cast) or legacy JSON string
         var otherHtmlFields = '';
@@ -149,6 +261,7 @@
             dataTable.search($(this).val()).draw();
     });
 
+    if ($("#packageDataTable").length) {
     dataTable = $("#packageDataTable").DataTable({
         pageLength: 10,
         ordering: false,
@@ -172,11 +285,13 @@
             { data: "icon", name: "packages.icon" },
             { data: "monthly_price", name: "packages.monthly_price" },
             { data: "yearly_price", name: "packages.yearly_price" },
+            { data: "classes", name: "packages.max_classes" },
             { data: "status", name: "status" },
             { data: "trail", name: "trail" },
             { data: "action", name: "action" },
         ],
     });
+    }
 
     $('#assignPackage').on('click', function () {
         var selector = $('#assignPackageModal');
@@ -193,6 +308,7 @@
             packageUserDataTable.search($(this).val()).draw();
     });
 
+    if ($("#packageUserDataTableList").length) {
     packageUserDataTable = $("#packageUserDataTableList").DataTable({
         pageLength: 10,
         ordering: false,
@@ -220,6 +336,7 @@
         columns: [
             { data: "user_name", name: "users.name" },
             { data: "package_name", name: "packages.name" },
+            { data: "classes", name: "user_packages.max_classes" },
             { data: "start_date", name: "user_packages.start_date" },
             { data: "end_date", name: "user_packages.end_date" },
             { data: "payment_status", name: "subscription_orders.payment_status" },
@@ -227,6 +344,7 @@
             { data: "action", name: "action" }
         ],
     });
+    }
 
     $(document).on('click', '.edit-user-package', function () {
         var id = $(this).data('id');
@@ -245,6 +363,7 @@
             $('#editUserPackagePkg').text(d.package_name);
             $('#editUserPackageStart').val(d.start_date);
             $('#editUserPackageEnd').val(d.end_date);
+            $('#editUserPackageMaxClasses').val(d.max_classes).trigger('change');
             $('#editUserPackageStatus').val(String(d.status));
             if (typeof $.fn.niceSelect !== 'undefined' && $('#editUserPackageStatus').next('.nice-select').length) {
                 $('#editUserPackageStatus').niceSelect('update');

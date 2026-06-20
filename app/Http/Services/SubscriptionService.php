@@ -21,6 +21,8 @@ class SubscriptionService
             ->where('user_packages.user_id', $userId)
             ->whereIn('user_packages.status', [ACTIVE])
             ->whereDate('user_packages.end_date', '>=', now())
+            ->orderByDesc('user_packages.end_date')
+            ->orderByDesc('user_packages.id')
             ->select('user_packages.*', 'subscription_orders.duration_type')
             ->first();
         return $ownerPackage?->makeHidden(['created_at', 'updated_at', 'deleted_at', 'is_trail', 'order_id', 'package_id', 'user_id']);

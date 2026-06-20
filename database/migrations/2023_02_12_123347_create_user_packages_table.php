@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('max_questions')->nullable()->comment('null = unlimited');
             $table->integer('max_teachers')->nullable()->comment('null = unlimited');
             $table->integer('max_question_sets')->nullable()->comment('null = unlimited');
+            $table->json('max_classes')->nullable()->comment('null = unlimited');
             $table->decimal('monthly_price', 8, 2)->default(0);
             $table->decimal('yearly_price', 8, 2)->default(0);
             $table->dateTime('start_date');

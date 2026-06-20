@@ -113,6 +113,7 @@
                                         <th><div class="text-nowrap">{{ __('Questions') }}</div></th>
                                         <th><div class="text-nowrap">{{ __('Teachers') }}</div></th>
                                         <th><div class="text-nowrap">{{ __('Question Sets') }}</div></th>
+                                        <th><div class="text-nowrap">{{ __('Classes') }}</div></th>
                                         <th><div class="text-nowrap">{{ __('Users on plan') }}</div></th>
                                         <th><div class="text-nowrap">{{ __('Paid orders') }}</div></th>
                                         <th class="text-end"><div class="text-nowrap">{{ __('Paid revenue') }}</div></th>
@@ -125,6 +126,7 @@
                                             <td>{{ $formatLimit($pr->max_questions, 'Unlimited') }}</td>
                                             <td>{{ $formatLimit($pr->max_teachers, 'Unlimited') }}</td>
                                             <td>{{ $formatLimit($pr->max_question_sets, 'Unlimited') }}</td>
+                                            <td>{{ formatPackageClassLimit($pr->max_classes, 'Classes') }}</td>
                                             <td>{{ $pr->active_users }}</td>
                                             <td>{{ $pr->paid_orders }}</td>
                                             <td class="text-end fw-600">
