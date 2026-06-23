@@ -95,6 +95,7 @@ class NotificationController extends Controller
         $data['pageTitle'] = __('Notification Template');
         $data['title'] = __('Notification Template');
         $data['activeNotifySetting'] = 'active';
+        $data['subNotifyActiveClass'] = 'active';
 
         $data['notifyTemplates'] = NotificationTemplates::where('tenant_id', auth()->user()->tenant_id)->get();
 

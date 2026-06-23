@@ -31,6 +31,7 @@ class LanguageController extends Controller
         $data['title'] = __('Manage Language');
         $data['showManageApplicationSetting'] = 'show';
         $data['activeLanguagesSetting'] = 'active';
+        $data['subLanguagesActiveClass'] = 'active';
 
         return view('sadmin.setting.languages.index', $data);
     }

@@ -6,6 +6,13 @@
     <div data-aos="fade-up" data-aos-duration="1000" class="p-sm-30 p-15">
         <div class="">
             <h4 class="fs-18 fw-600 lh-18 text-textBlack pb-16">{{ __($title) }}</h4>
+            <div class="row rg-20">
+                <div class="col-xl-3">
+                    <div class="bg-white p-sm-25 p-15 bd-one bd-c-stroke bd-ra-8">
+                        @include('sadmin.setting.partials.general-sidebar')
+                    </div>
+                </div>
+                <div class="col-xl-9">
             <div class="bg-white p-sm-25 p-15 bd-one bd-c-stroke bd-ra-8">
 
                 <input type="hidden" value="{{ route('super-admin.setting.email-template') }}" id="email-temp-route">
@@ -101,8 +108,10 @@
                     </div>
                 </form>
             </div>
+            </div>
         </div>
     </div>
+</div>
 
     {{-- email preview model --}}
     <div class="modal fade" id="emailPreviewModal" tabindex="-1" aria-labelledby="emailPreviewModalLabel"

@@ -55,6 +55,7 @@ class SettingController extends Controller
         $data['pageTitle'] = __('Configuration Setting');
         $data['showManageApplicationSetting'] = 'show';
         $data['activeConfigurationSetting'] = 'active';
+        $data['subConfigurationActiveClass'] = 'active';
 
         return view('sadmin.setting.general_settings.configuration')->with($data);
     }

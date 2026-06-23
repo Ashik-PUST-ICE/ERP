@@ -23,6 +23,7 @@ class EmailTemplateController extends Controller
         $data['showManageApplicationSetting'] = 'show';
         $data['pageTitle'] = __('Email Template');
         $data['activeEmailSetting'] = 'active';
+        $data['subEmailActiveClass'] = 'active';
 
         $data['emailTemplates'] = $this->settingsService->getEmailTemplate(auth()->user()->tenant_id);
         return view('sadmin.setting.email_temp.email-temp', $data);

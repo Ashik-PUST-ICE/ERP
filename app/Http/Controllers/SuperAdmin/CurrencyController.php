@@ -29,6 +29,7 @@ class CurrencyController extends Controller
         $data['title'] = __('Currency Setting');
         $data['showManageApplicationSetting'] = 'show';
         $data['activeCurrenciesSetting'] = 'active';
+        $data['subCurrenciesActiveClass'] = 'active';
 
         return view('sadmin.setting.currencies.index', $data);
     }
