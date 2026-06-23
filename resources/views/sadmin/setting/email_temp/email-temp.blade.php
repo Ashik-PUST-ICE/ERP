@@ -55,7 +55,8 @@
                         </tbody>
                     </table>
                 </div>
-
+            </div>
+                </div>
             </div>
         </div>
     </div>
@@ -108,10 +109,8 @@
                     </div>
                 </form>
             </div>
-            </div>
         </div>
     </div>
-</div>
 
     {{-- email preview model --}}
     <div class="modal fade" id="emailPreviewModal" tabindex="-1" aria-labelledby="emailPreviewModalLabel"

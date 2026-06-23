@@ -14,9 +14,10 @@
                 </div>
                 <div class="col-xl-9">
 
-            <input type="hidden" id="currency-route" value="{{ route('super-admin.setting.currencies.index') }}">
+            <div class="bg-white p-sm-25 p-15 bd-one bd-c-stroke bd-ra-8">
+                <input type="hidden" id="currency-route" value="{{ route('super-admin.setting.currencies.index') }}">
 
-            <div class="table-wrap-one">
+                <div class="table-wrap-one">
                 <div class="table-wrapTop d-flex align-items-center justify-content-center justify-content-md-between flex-wrap g-10 pb-18">
                     <div class="d-flex justify-content-center justify-content-sm-start g-10 flex-wrap">
                         <div class="search-one flex-grow-1 max-w-207">
@@ -55,11 +56,10 @@
                     </thead>
                 </table>
             </div>
-
+                </div>
             </div>
         </div>
     </div>
-</div>
     <!-- Page content area end -->
     <!-- Add Modal section start -->
     <div class="modal fade" id="add-modal" aria-hidden="true" tabindex="-1">
